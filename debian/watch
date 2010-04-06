@@ -1,0 +1,3 @@
+version=3
+
+http://www.swftools.org/download.html (?:.*/)?swftools-([\d.]+)\.tar\.gz debian uupdate

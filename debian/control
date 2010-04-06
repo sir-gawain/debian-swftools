@@ -1,0 +1,67 @@
+Source: swftools
+Section: partner/utils
+Priority: extra
+Maintainer: Brian Thomason <brian.thomason@canonical.com>
+XSBC-Original-Maintainer: Simo Kauppi <swk@nic.fi>
+Build-Depends: debhelper (>= 5.0.0), autotools-dev, dpatch (>= 2.0.21), libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg62-dev (>= 6b-13), libt1-dev (>= 5.1.0), libgif-dev (>= 4.1.4), zlib1g-dev (>= 1:1.2.3), libart-2.0-dev (>= 2.3.17), python-all-dev (>= 2.3.5), python-imaging (>= 1.1.5), python-support (>= 0.5.3)
+Standards-Version: 3.8.4
+Homepage: http://www.swftools.org/
+
+Package: swftools
+Section: partner/utils
+Architecture: any
+Replaces: libming-util (<= 1:0.3.0-11.1)
+Conflicts: libming-util (<= 1:0.3.0-11.1)
+Depends: ${shlibs:Depends}, ${misc:Depends}, gsfonts
+Suggests: gs-common
+Description: Collection of utilities for SWF file manipulation/creation
+ SWF Tools is a collection of SWF (Flash) manipulation and creation utilities.
+ .
+ This package includes: pdf2swf, jpeg2swf, png2swf, gif2swf, font2swf,
+ wav2swf, swfcombine, swfextract, swfdump, swfstrings, swfbbox and swfc.
+ .
+  * pdf2swf is a PDF to SWF Converter. It generates one frame per page and
+    enables you to have fully formatted text, including tables, formulas etc.
+    inside your Flash Movie. It's based on the xpdf PDF parser from
+    Derek B. Noonburg.
+  * jpeg2swf takes one or more JPEG pictures and generates an SWF slideshow.
+  * png2swf takes one or more PNG pictures and generates an SWF slideshow.
+  * gif2swf converts GIFs into SWF. It is also able to handle animated gifs.
+  * font2swf converts font files (TTF, Type1) into SWF.
+  * wav2swf converts WAV files into SWF.
+  * swfcombine is a tool for inserting SWFs into Wrapper SWFs. (Templates)
+    E.g. for including the pdf2swf SWFs into some sort of Browsing-SWF.
+  * swfextract allows to extract Movieclips, Sounds, Images etc. from SWF
+    files.
+  * swfdump prints out various information about SWFs.
+  * swfstrings scans SWFs for text data.
+  * swfbbox allows to readjust SWF bounding boxes.
+  * swfc is a tool for creating SWF files from simple script files.
+
+Package: python-rfxswf
+Section: partner/python
+Architecture: any
+Provides: ${python:Provides}
+Replaces: python2.4-rfxswf (<< 0.8.1-2)
+Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}, python-imaging (>= 1.1.5-11)
+Description: Python wrapper for the rfxswf library
+ RFXSWF library is a fully featured library which can be used for standalone
+ SWF generation. It includes support for Bitmaps, Buttons, Shapes, Text, Fonts,
+ Sound etc. It also has support for ActionScript using the Ming ActionCompiler.
+ .
+ This is the wrapper for using the rfxswf library from the Python scripting
+ language. The rfxswf library is in the librfxswf-dev package.
+
+Package: librfxswf-dev
+Section: partner/libdevel
+Architecture: any
+Depends: ${misc:Depends}, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg62-dev (>= 6b-13), libgif-dev (>= 4.1.4), libt1-dev (>= 5.1.0), zlib1g-dev (>= 1:1.2.3)
+Description: RFXSWF library for SWF (Flash) generation
+ RFXSWF library is a fully featured library which can be used for standalone
+ SWF generation. It includes support for Bitmaps, Buttons, Shapes, Text, Fonts,
+ Sound etc. It also has support for ActionScript using the Ming ActionCompiler.
+ .
+ This package includes the static library and the header files.
+ .
+ There is also a wrapper for using the rfxswf library from the Python scripting
+ language. The wrapper is in the python2.x-rfxswf package.

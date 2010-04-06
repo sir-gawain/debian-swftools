@@ -1,0 +1,203 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 05_xpdf-pl4.dpatch by Brian Thomason <brian.thomason@canonical.com>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: swftools embeds a copy of xpdf
+## DP: This patch applies security update pl4 to the embedded xpdf
+
+diff -Nur swftools-0.9.0~/lib/pdf/xpdf/SplashBitmap.cc swftools-0.9.0/lib/pdf/xpdf.bak/SplashBitmap.cc
+--- swftools-0.9.0~/lib/pdf/xpdf/SplashBitmap.cc	2007-02-27 17:05:52.000000000 -0500
++++ swftools-0.9.0/lib/pdf/xpdf.bak/SplashBitmap.cc	2010-04-06 16:56:46.272911337 -0400
+@@ -11,6 +11,7 @@
+ #endif
+ 
+ #include <stdio.h>
++#include <limits.h>
+ #include "gmem.h"
+ #include "SplashErrorCodes.h"
+ #include "SplashBitmap.h"
+@@ -27,30 +28,48 @@
+   mode = modeA;
+   switch (mode) {
+   case splashModeMono1:
+-    rowSize = (width + 7) >> 3;
++    if (width > 0) {
++      rowSize = (width + 7) >> 3;
++    } else {
++      rowSize = -1;
++    }
+     break;
+   case splashModeMono8:
+-    rowSize = width;
++    if (width > 0) {
++      rowSize = width;
++    } else {
++      rowSize = -1;
++    }
+     break;
+   case splashModeRGB8:
+   case splashModeBGR8:
+-    rowSize = width * 3;
++    if (width > 0 && width <= INT_MAX / 3) {
++      rowSize = width * 3;
++    } else {
++      rowSize = -1;
++    }
+     break;
+ #if SPLASH_CMYK
+   case splashModeCMYK8:
+-    rowSize = width * 4;
++    if (width > 0 && width <= INT_MAX / 4) {
++      rowSize = width * 4;
++    } else {
++      rowSize = -1;
++    }
+     break;
+ #endif
+   }
+-  rowSize += rowPad - 1;
+-  rowSize -= rowSize % rowPad;
+-  data = (SplashColorPtr)gmalloc(rowSize * height);
++  if (rowSize > 0) {
++    rowSize += rowPad - 1;
++    rowSize -= rowSize % rowPad;
++  }
++  data = (SplashColorPtr)gmallocn(height, rowSize);
+   if (!topDown) {
+     data += (height - 1) * rowSize;
+     rowSize = -rowSize;
+   }
+   if (alphaA) {
+-    alpha = (Guchar *)gmalloc(width * height);
++    alpha = (Guchar *)gmallocn(width, height);
+   } else {
+     alpha = NULL;
+   }
+diff -Nur swftools-0.9.0~/lib/pdf/xpdf/Splash.cc swftools-0.9.0/lib/pdf/xpdf.bak/Splash.cc
+--- swftools-0.9.0~/lib/pdf/xpdf/Splash.cc	2007-02-27 17:05:52.000000000 -0500
++++ swftools-0.9.0/lib/pdf/xpdf.bak/Splash.cc	2010-04-06 16:56:46.264906761 -0400
+@@ -12,6 +12,7 @@
+ 
+ #include <stdlib.h>
+ #include <string.h>
++#include <limits.h>
+ #include "gmem.h"
+ #include "SplashErrorCodes.h"
+ #include "SplashMath.h"
+@@ -1912,7 +1913,10 @@
+   xq = w % scaledWidth;
+ 
+   // allocate pixel buffer
+-  pixBuf = (SplashColorPtr)gmalloc((yp + 1) * w);
++  if (yp < 0 || yp > INT_MAX - 1) {
++    return splashErrBadArg;
++  }
++  pixBuf = (SplashColorPtr)gmallocn(yp + 1, w);
+ 
+   // initialize the pixel pipe
+   pipeInit(&pipe, 0, 0, state->fillPattern, NULL, state->fillAlpha,
+@@ -2208,9 +2212,12 @@
+   xq = w % scaledWidth;
+ 
+   // allocate pixel buffers
+-  colorBuf = (SplashColorPtr)gmalloc((yp + 1) * w * nComps);
++  if (yp < 0 || yp > INT_MAX - 1 || w > INT_MAX / nComps) {
++    return splashErrBadArg;
++  }
++  colorBuf = (SplashColorPtr)gmallocn(yp + 1, w * nComps);
+   if (srcAlpha) {
+-    alphaBuf = (Guchar *)gmalloc((yp + 1) * w);
++    alphaBuf = (Guchar *)gmallocn(yp + 1, w);
+   } else {
+     alphaBuf = NULL;
+   }
+diff -Nur swftools-0.9.0~/lib/pdf/xpdf/SplashErrorCodes.h swftools-0.9.0/lib/pdf/xpdf.bak/SplashErrorCodes.h
+--- swftools-0.9.0~/lib/pdf/xpdf/SplashErrorCodes.h	2007-02-27 17:05:52.000000000 -0500
++++ swftools-0.9.0/lib/pdf/xpdf.bak/SplashErrorCodes.h	2010-04-06 16:56:46.264906761 -0400
+@@ -29,4 +29,6 @@
+ 
+ #define splashErrSingularMatrix  8	// matrix is singular
+ 
++#define splashErrBadArg          9	// bad argument
++
+ #endif
+diff -Nur swftools-0.9.0~/lib/pdf/xpdf/Stream.cc swftools-0.9.0/lib/pdf/xpdf.bak/Stream.cc
+--- swftools-0.9.0~/lib/pdf/xpdf/Stream.cc	2009-04-17 11:57:11.000000000 -0400
++++ swftools-0.9.0/lib/pdf/xpdf.bak/Stream.cc	2010-04-06 16:56:46.264906761 -0400
+@@ -325,6 +325,10 @@
+   } else {
+     imgLineSize = nVals;
+   }
++  if (width > INT_MAX / nComps) {
++    // force a call to gmallocn(-1,...), which will throw an exception
++    imgLineSize = -1;
++  }
+   imgLine = (Guchar *)gmallocn(imgLineSize, sizeof(Guchar));
+   imgIdx = nVals;
+ }
+diff -Nur swftools-0.9.0~/lib/pdf/xpdf/XRef.cc swftools-0.9.0/lib/pdf/xpdf.bak/XRef.cc
+--- swftools-0.9.0~/lib/pdf/xpdf/XRef.cc	2007-02-27 17:05:52.000000000 -0500
++++ swftools-0.9.0/lib/pdf/xpdf.bak/XRef.cc	2010-04-06 16:56:46.272911337 -0400
+@@ -52,6 +52,8 @@
+   // generation 0.
+   ObjectStream(XRef *xref, int objStrNumA);
+ 
++  GBool isOk() { return ok; }
++
+   ~ObjectStream();
+ 
+   // Return the object number of this object stream.
+@@ -67,6 +69,7 @@
+   int nObjects;			// number of objects in the stream
+   Object *objs;			// the objects (length = nObjects)
+   int *objNums;			// the object numbers (length = nObjects)
++  GBool ok;
+ };
+ 
+ ObjectStream::ObjectStream(XRef *xref, int objStrNumA) {
+@@ -80,6 +83,7 @@
+   nObjects = 0;
+   objs = NULL;
+   objNums = NULL;
++  ok = gFalse;
+ 
+   if (!xref->fetch(objStrNum, 0, &objStr)->isStream()) {
+     goto err1;
+@@ -105,6 +109,13 @@
+     goto err1;
+   }
+ 
++  // this is an arbitrary limit to avoid integer overflow problems
++  // in the 'new Object[nObjects]' call (Acrobat apparently limits
++  // object streams to 100-200 objects)
++  if (nObjects > 1000000) {
++    error(-1, "Too many objects in an object stream");
++    goto err1;
++  }
+   objs = new Object[nObjects];
+   objNums = (int *)gmallocn(nObjects, sizeof(int));
+   offsets = (int *)gmallocn(nObjects, sizeof(int));
+@@ -161,10 +172,10 @@
+   }
+ 
+   gfree(offsets);
++  ok = gTrue;
+ 
+  err1:
+   objStr.free();
+-  return;
+ }
+ 
+ ObjectStream::~ObjectStream() {
+@@ -837,6 +848,11 @@
+ 	delete objStr;
+       }
+       objStr = new ObjectStream(this, e->offset);
++      if (!objStr->isOk()) {
++	delete objStr;
++	objStr = NULL;
++	goto err;
++      }
+     }
+     objStr->getObject(e->gen, num, obj);
+     break;

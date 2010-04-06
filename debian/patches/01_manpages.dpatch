@@ -1,0 +1,176 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01-manpages.dpatch by Simo Kauppi <swk@nic.fi>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: This patch fixes the jpg2swf.1 and swfstrings.1 manpages, which
+## DP: have the letter 'ö' in the author's name.
+## DP: Fixes also the minus signs in swfextract.1, swfdump.1, swfbbox.1,
+## DP: font2swf.1, pdf2swf.1, wav2swf.1 and swfcombine.1 manpages.
+
+@DPATCH@
+diff -urNad swftools-0.9.0~/src/font2swf.1 swftools-0.9.0/src/font2swf.1
+--- swftools-0.9.0~/src/font2swf.1	2009-04-17 15:39:51.000000000 +0000
++++ swftools-0.9.0/src/font2swf.1	2009-05-06 03:25:58.000000000 +0000
+@@ -20,7 +20,7 @@
+     Print short help message and exit
+ .TP
+ \fB\-v\fR, \fB\-\-verbose\fR 
+-    Be verbose. Use more than one -v for greater effect.
++    Be verbose. Use more than one \-v for greater effect.
+ .TP
+ \fB\-o\fR, \fB\-\-output\fR \fIfilename\fR
+     Write output to file \fIfilename\fR. (If not given, the output will go
+diff -urNad swftools-0.9.0~/src/jpeg2swf.1 swftools-0.9.0/src/jpeg2swf.1
+--- swftools-0.9.0~/src/jpeg2swf.1	2009-04-17 15:39:51.000000000 +0000
++++ swftools-0.9.0/src/jpeg2swf.1	2009-05-06 03:25:58.000000000 +0000
+@@ -57,6 +57,6 @@
+     Make importable as asset with \fIassetname\fR
+ .SH AUTHORS
+ 
+-Rainer Böhme <rfxswf@reflex-studio.de>
++Rainer B\[:o]hme <rfxswf@reflex-studio.de>
+ .TP
+ Matthias Kramm
+diff -urNad swftools-0.9.0~/src/pdf2swf.1 swftools-0.9.0/src/pdf2swf.1
+--- swftools-0.9.0~/src/pdf2swf.1	2009-05-06 03:25:50.000000000 +0000
++++ swftools-0.9.0/src/pdf2swf.1	2009-05-06 03:26:54.000000000 +0000
+@@ -3,7 +3,7 @@
+ pdf2swf - Converts Acrobat PDF files into Flash SWF Animation files.
+ 
+ .SH Synopsis
+-.B pdf2swf [-options] file.pdf -o file.swf
++.B pdf2swf [-options] file.pdf /-o file.swf
+ 
+ .SH DESCRIPTION
+ Converts a PDF file to a SWF file.
+@@ -26,7 +26,7 @@
+     Use password for deciphering the pdf.
+ .TP
+ \fB\-v\fR, \fB\-\-verbose\fR 
+-    Be verbose. Use more than one -v for greater effect.
++    Be verbose. Use more than one /-v for greater effect.
+ .TP
+ \fB\-z\fR, \fB\-\-zlib\fR 
+     The resulting SWF will not be playable in browsers with Flash Plugins 5 and below!
+diff -urNad swftools-0.9.0~/src/swfbbox.1 swftools-0.9.0/src/swfbbox.1
+--- swftools-0.9.0~/src/swfbbox.1	2009-04-17 15:39:51.000000000 +0000
++++ swftools-0.9.0/src/swfbbox.1	2009-05-06 03:25:58.000000000 +0000
+@@ -35,7 +35,7 @@
+     Clip bounding boxes to movie size
+ .TP
+ \fB\-o\fR, \fB\-\-output\fR \fIfilename\fR
+-    Set output filename to \fIfilename\fR (for -O)
++    Set output filename to \fIfilename\fR (for \-O)
+ .TP
+ \fB\-v\fR, \fB\-\-verbose\fR 
+     Be more verbose
+diff -urNad swftools-0.9.0~/src/swfcombine.1 swftools-0.9.0/src/swfcombine.1
+--- swftools-0.9.0~/src/swfcombine.1	2009-04-17 15:39:51.000000000 +0000
++++ swftools-0.9.0/src/swfcombine.1	2009-05-06 03:25:58.000000000 +0000
+@@ -47,7 +47,7 @@
+     Clip the slave objects by the corresponding master objects
+ .TP
+ \fB\-v\fR, \fB\-\-verbose\fR 
+-    Be verbose. Use more than one -v for greater effect 
++    Be verbose. Use more than one \-v for greater effect 
+ .TP
+ \fB\-d\fR, \fB\-\-dummy\fR 
+     Don't require the presence of slave objects. Usually used together with \fB\-X\fR, \fB\-Y\fR or \fB\-r\fR.
+@@ -69,10 +69,10 @@
+     Force the output to have the framerate \fIfps\fR. (Otherwise, the framerate of the master file will be used)
+ .TP
+ \fB\-X\fR, \fB\-\-width\fR \fIwidth\fR       
+-    Force movie bbox width to \fIwidth\fR (default: use master width (not with -t))
++    Force movie bbox width to \fIwidth\fR (default: use master width (not with \-t))
+ .TP
+ \fB\-Y\fR, \fB\-\-height\fR \fIheight\fR      
+-    Force movie bbox height to \fIheight\fR (default: use master height (not with -t))
++    Force movie bbox height to \fIheight\fR (default: use master height (not with \-t))
+ .TP
+ \fB\-N\fR, \fB\-\-local-with-networking\fR 
+     Make output file "local-with-networking"
+@@ -111,7 +111,7 @@
+ Create two flash movies. Insert some rectangle into one of them, and give
+ it a name. (E.g. "foo") Now call
+ 
+-swfcombine -o combined.swf master.swf foo=slave.swf
++swfcombine \-o combined.swf master.swf foo=slave.swf
+ 
+ As a result, the slave movie should be visible inside the master movie
+ at the position where the rectangle used to be.
+diff -urNad swftools-0.9.0~/src/swfdump.1 swftools-0.9.0/src/swfdump.1
+--- swftools-0.9.0~/src/swfdump.1	2009-04-17 15:39:51.000000000 +0000
++++ swftools-0.9.0/src/swfdump.1	2009-05-06 03:25:58.000000000 +0000
+@@ -18,7 +18,7 @@
+     Print short help message and exit
+ .TP
+ \fB\-D\fR, \fB\-\-full\fR 
+-    Show everything. Same as -atp
++    Show everything. Same as \-atp
+ .TP
+ \fB\-V\fR, \fB\-\-version\fR 
+     Print version info and exit
+@@ -51,16 +51,16 @@
+     Print tag's bounding boxes
+ .TP
+ \fB\-X\fR, \fB\-\-width\fR 
+-    Print out the horizontal dimension of the movie, in a string of the form "-X width"
++    Print out the horizontal dimension of the movie, in a string of the form "\-X width"
+ .TP
+ \fB\-Y\fR, \fB\-\-height\fR 
+-    Print out the vertical dimension of the movie, in a string of the form "-Y height"
++    Print out the vertical dimension of the movie, in a string of the form "\-Y height"
+ .TP
+ \fB\-r\fR, \fB\-\-rate\fR 
+-    Print out the frame rate of the movie, in a string of the form "-r rate".
++    Print out the frame rate of the movie, in a string of the form "\-r rate".
+ .TP
+ \fB\-f\fR, \fB\-\-frames\fR 
+-    Print out the number of frames in the movie, in a string of the form "-f frames"
++    Print out the number of frames in the movie, in a string of the form "\-f frames"
+ .TP
+ \fB\-d\fR, \fB\-\-hex\fR 
+     Print hex output of tag data, too.
+diff -urNad swftools-0.9.0~/src/swfextract.1 swftools-0.9.0/src/swfextract.1
+--- swftools-0.9.0~/src/swfextract.1	2009-01-27 17:18:37.000000000 +0000
++++ swftools-0.9.0/src/swfextract.1	2009-05-06 03:25:58.000000000 +0000
+@@ -27,7 +27,7 @@
+ \fIids\fR is a range of JPEG IDs to extract. E.g. 1-2,3,14-
+ .TP
+ \fB\-p\fR, \fB\-\-pngs\fR \fIids\fR
+-\fIids\fR is a range of PNG IDs to extract. E.g. -10,20-30
++\fIids\fR is a range of PNG IDs to extract. E.g. \-10,20\-30
+ .TP
+ \fB\-f\fR, \fB\-\-frame\fR \fIframes\fR
+ \fIframes\fR is a range of frames to extract. E.g. 1-10,20-30,40-
+@@ -40,7 +40,7 @@
+ .TP
+ \fB\-P\fR, \fB\-\-placeobject\fR
+ Copy original placeobject tag for the given object into the
+-output file (Use with -i). This means that the object is
++output file (Use with \-i). This means that the object is
+ at the same position in the generated movie as in the
+ original movie.
+ .TP
+diff -urNad swftools-0.9.0~/src/swfstrings.1 swftools-0.9.0/src/swfstrings.1
+--- swftools-0.9.0~/src/swfstrings.1	2009-01-27 17:18:37.000000000 +0000
++++ swftools-0.9.0/src/swfstrings.1	2009-05-06 03:25:58.000000000 +0000
+@@ -20,5 +20,5 @@
+ 
+ .SH AUTHOR
+ 
+-Rainer Böhme <rfxswf@reflex-studio.de>
++Rainer B\[:o]hme <rfxswf@reflex-studio.de>
+ 
+diff -urNad swftools-0.9.0~/src/wav2swf.1 swftools-0.9.0/src/wav2swf.1
+--- swftools-0.9.0~/src/wav2swf.1	2009-05-06 03:25:44.000000000 +0000
++++ swftools-0.9.0/src/wav2swf.1	2009-05-06 03:26:32.000000000 +0000
+@@ -47,7 +47,7 @@
+     Set mp3 bitrate to \fIbps\fR (default: 32)
+ .TP
+ \fB\-v\fR, \fB\-\-verbose\fR 
+-    Be more verbose. (Use more than one -v for greater effect)
++    Be more verbose. (Use more than one /-v for greater effect)
+ .SH AUTHOR
+ 
+ Matthias Kramm <kramm@quiss.org>

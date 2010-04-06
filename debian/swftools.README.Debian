@@ -1,0 +1,11 @@
+swftools for Debian
+--------------------------
+
+This version of swftools is compiled without the L.A.M.E support. The L.A.M.E
+support in the original swftools is used to convert wave sound format into MPEG
+1 audio layer 3 format for the SWF file.
+
+There is an unofficial version of the swftools, which depends on the lame. The
+unofficial version is called swftools-nonfree.
+
+ -- Simo Kauppi <swk@nic.fi>, Mon, 19 Dec 2005 17:44:23 +0200

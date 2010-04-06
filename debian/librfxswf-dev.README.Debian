@@ -1,0 +1,12 @@
+rfxswf library for Debian
+--------------------------
+
+rfxswf library is part of the swftools software.
+
+See http://www.swftools.org/examples.html for examples how to use the rfxswf
+library.
+
+There is also a wrapper for using the library from the Python scripting
+language. The wrapper is in the python2.x-rfxswf package.
+
+ -- Simo Kauppi <swk@nic.fi>, Mon, 19 Dec 2005 17:44:23 +0200
