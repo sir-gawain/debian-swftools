@@ -287,3 +287,11 @@
 	* lib/python/gfx: New python module for accessing pdf2swf functionality
 	* as3compile: New tool, for compiling ActionScript 3.0
 	* swfc: added AS3.0 support
+	* swfc: added font glyphs selection
+
+0.9.1:
+	* pdf2swf: bugfixes, speedups
+	* pdf2swf: improved font quality (FlashType)
+	* librfxswf: support for fontalignzones
+	* gpdf2swf: completely reworked pdf2swf GUI (Ricardo Pedroso)
+	* as3compile: many bugfixes, support for swc libraries

@@ -14,7 +14,7 @@ all install uninstall clean:
 	cd lib;$(MAKE) $@
 	@echo making $@ in lib/python...
 	cd lib/python;$(MAKE) $@
-	@echo making $@ in src...
+	@echo making $@ in lib/ruby...
 	cd src;$(MAKE) $@
 	@echo making $@ in avi2swf...
 	cd avi2swf;$(MAKE) $@
@@ -34,6 +34,8 @@ uninstall-local:
 	rm -rf $(pkgdatadir)
 
 all-local:
+	@true
 install-local:
+	@true
 
 .PHONY: all install uninstall clean distclean clean-local uninstall-local all-local install-local

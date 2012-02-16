@@ -27,6 +27,7 @@
 #include "files.h"
 #include "common.h"
 #include "tokenizer.h"
+#include "../os.h"
 
 static int verbose = 0;
 static void dbg(const char*format, ...)
@@ -103,17 +104,50 @@ char*get_path(const char*file)
         return strdup(".");
     }
 }
+
+char is_absolute(const char*filename) 
+{
+    if(!filename || !filename[0])
+        return 0;
+    if(filename[0]=='/' || filename[0]=='\\')
+        return 1;
+    if(filename[1]==':' && filename[2]=='/')
+        return 1;
+    if(filename[1]==':' && filename[2]=='\\')
+        return 1;
+    return 0;
+}
+
+char* filename_to_lowercase(const char*name)
+{
+    char*n = strdup(name);
+    //char*x1 = strrchr(name, '/');
+    //char*x2 = strrchr(name, '\\');
+    char*s = n;
+    //if(x1+1>s) s=x1+1;
+    //if(x2+1>s) s=x2+1;
+    while(*s) {
+	/* FIXME: what we probably should do here is use libc's tolower().
+	   I don't really know yet, though, how Windows (or MacOS X) handles
+	   lowercasing of Unicode filenames */
+	if(*s>='A' && *s<='Z')
+	    *s += 'a'-'A';
+	s++;
+    }
+    return n;
+}
+
 char* normalize_path(const char*path)
 {
     char*n = 0, *d = 0;
-    if(path[0] != '/') {
+    if(!is_absolute(path)) {
         char buf[512];
         char*c = getcwd(buf,512);
         int l = strlen(buf);
         d = n = malloc(l+strlen(path)+10);
         strcpy(n, buf);d += l;
-        if(!l || n[l-1]!='/') {
-            *d='/';d++;
+        if(!l || n[l-1]!=path_seperator) {
+            *d=path_seperator;d++;
         }
     } else {
         d = n = strdup(path);
@@ -122,19 +156,19 @@ char* normalize_path(const char*path)
     char init = 1;
 
     while(*s) {
-        if(init && s[0] == '.' && (s[1]=='/' || s[1]=='\0')) {
+        if(init && s[0] == '.' && (s[1]==path_seperator || s[1]=='\0')) {
             if(!s[1]) break;
             s+=2;
             init=1;
             continue;
         }
-        if(init && s[0] == '.' && s[1] == '.' && (s[2] == '/' || s[2]=='\0')) {
+        if(init && s[0] == '.' && s[1] == '.' && (s[2] == path_seperator || s[2]=='\0')) {
             // step one down
             char*last = 0;
             if(d<=n) 
                 return 0;
             *--d = 0;
-            if(!(last=strrchr(n, '/'))) {
+            if(!(last=strrchr(n, path_seperator))) {
                 return 0;
             }
             d = last+1;
@@ -145,13 +179,18 @@ char* normalize_path(const char*path)
         }
 
         *d = *s;
-        if(*s=='/') init=1;
+        if(*s==path_seperator) init=1;
         else init=0;
         d++;s++;
     }
-    if(d!=n && d[-1]=='/') 
+    if(d!=n && d[-1]==path_seperator) 
         d--;
     *d = 0;
+ 
+#ifdef LOWERCASE_UPPERCASE
+    n = filename_to_lowercase(n);
+#endif
+    
     return n;
 }
 static void testnormalize()
@@ -174,34 +213,21 @@ static void testnormalize()
     TEST("/tmp/../usr/");
 }
 
-
 char* concat_paths(const char*base, const char*add)
 {
     int l1 = strlen(base);
     int l2 = strlen(add);
     int pos = 0;
     char*n = 0;
-    while(l1 && base[l1-1] == '/')
+    while(l1 && base[l1-1] == path_seperator)
 	l1--;
-    while(pos < l2 && add[pos] == '/')
+    while(pos < l2 && add[pos] == path_seperator)
 	pos++;
     n = (char*)malloc(l1 + (l2-pos) + 2);
     memcpy(n,base,l1);
-    n[l1]='/';
+    n[l1]=path_seperator;
     memcpy(&n[l1+1],&add[pos],l2-pos+1);
     return n;
-}
-char is_absolute(const char*filename) 
-{
-    if(!filename || !filename[0])
-        return 0;
-    if(filename[0]=='/' || filename[0]=='\\')
-        return 1;
-    if(filename[1]==':' && filename[1]=='/')
-        return 1;
-    if(filename[1]==':' && filename[1]=='\\')
-        return 1;
-    return 0;
 }
 
 char*find_file(const char*filename, char error)
@@ -298,3 +324,4 @@ void* leave_file()
         return include_stack[include_stack_ptr];
     }
 }
+
