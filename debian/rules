@@ -1,13 +1,13 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
+
+SRC_VERSION = $(shell dpkg-parsechangelog | sed -ne 's/^Version: \(\([0-9]\+\):\)\?\(.*\)-.*/\3/p')
+ORIG_VERSION = $(shell echo $(SRC_VERSION) | sed -ne 's/+ds1//p')
+ORIGTAR = swftools_$(ORIG_VERSION).orig.tar.gz
+ORIGDIR = swftools_$(ORIG_VERSION).orig
+DEBTAR = swftools_$(SRC_VERSION).orig.tar.gz
 
 include /usr/share/python/python.mk
 
@@ -16,157 +16,87 @@ include /usr/share/python/python.mk
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
-python_targets = $(shell pyversions -s)
+python_versions = $(shell pyversions -s)
 
-ifneq (,$(wildcard /usr/bin/libart2-config))
-LIBART = libart2
-else
-ifneq (,$(wildcard /usr/bin/libart-config))
-LIBART = libart
-endif
-endif
-LIBART_LIBS = $(shell $(LIBART)-config --libs)
-LIBART_CFLAGS = $(shell $(LIBART)-config --cflags)
+#LIBART_LIBS = -L/usr/lib -lart_lgpl_2
+#LIBART_CFLAGS = -I/usr/include/libart-2.0
 
-LIBPOPPLER_CFLAGS = -I/usr/include/poppler
-LIBPOPPLER_LIBS = -lpoppler
+define build_python
+	$(MAKE) -C lib/python clean
+	sed -i s,"^PYTHON_LIB=.*","PYTHON_LIB=-l$(1) /usr/lib/$(2)/PIL/_imaging.so", Makefile.common
+	sed -i s,"^PYTHON_INCLUDES=.*","PYTHON_INCLUDES=-I/usr/include/$(1)", Makefile.common
+	$(MAKE) -C lib/python SWF.so
+	mkdir -p lib/python/usr/lib/$(2)
+	mv lib/python/SWF.so lib/python/usr/lib/$(2)/SWF.so;
+endef
 
 # --enable-warnings sets CFLAGS to
 # "-Wall -Wno-unused -Wno-format -Wno-redundant-decls"
 # --enable-debug sets CFLAGS to "-O2 -g"
 # in the configure script
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS = -g
-	CFGFLAGS = --enable-warnings
-else
-	CFGFLAGS = --enable-warnings --enable-debug
-endif
+#ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+#	CFLAGS = -g
+#	CFGFLAGS = --enable-warnings
+#else
+#	CFGFLAGS = --enable-warnings --enable-debug
+#endif
 
-patch-stamp:
-	dpatch apply-all
-	touch $@
+%:
+	dh $@ --with python2
 
-unpatch:
-	dpatch deapply-all
-	rm -rf patch-stamp debian/patched
-
-config.status: patch-stamp configure
+clean:
 	dh_testdir
-	ln -sf /usr/share/misc/config.sub .
-	ln -sf /usr/share/misc/config.guess .
-	# Add here commands to configure the package.
-	LDFLAGS="-Wl,-z,defs" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info $(CFGFLAGS)
+	dh_testroot
+	[ ! -f Makefile ] || $(MAKE) distclean
+	rm -f core
+	rm -f python*-stamp
+	rm -f aclocal.m4 config.h config.log lib/action/Makefile swfs/Makefile lib/pdf/Makefile lib/swf/Makefile
+	rm -f _pypath.py _pypath.txt
+	rm -rf lib/python/usr
+	[ ! -f configure.dist ] || mv configure.dist configure
+	dh_autotools-dev_restoreconfig
+	dh_clean
 
+override_dh_auto_configure:
+	dh_autotools-dev_updateconfig
+	mv configure configure.dist
+	aclocal -I m4
+	autoconf
+	LDFLAGS="-Wl,-z,defs" ./configure --enable-debug --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-lame --enable-poppler $(CFGFLAGS)
 
-build: build-stamp
-
-build-stamp:  config.status
-	dh_testdir
-
-	# Add here commands to compile the package.
-	#
+override_dh_auto_build:
 	# Add libart stuff into the Makefile.common
 	cp Makefile.common Makefile.common.bak
-	echo "C += $(LIBART_CFLAGS)" >>Makefile.common
-	echo "CC += $(LIBART_CFLAGS)" >>Makefile.common
-	echo "LIBS += $(LIBART_LIBS)" >>Makefile.common
-	$(MAKE) -C lib
-	$(MAKE) -C src
+#	echo "C += $(LIBART_CFLAGS)" >>Makefile.common
+#	echo "CC += $(LIBART_CFLAGS)" >>Makefile.common
+#	echo "LIBS += $(LIBART_LIBS)" >>Makefile.common
+	$(MAKE)
+#	$(MAKE) -C lib
+
 	mv Makefile.common.bak Makefile.common
-	# Don't bother to compile until it works without lame
-	# avi2swf is outdated anyway, so it will probaly be removed
-	# from the future releases
-	# $(MAKE) -C avi2swf
-	$(MAKE) -C swfs
-	touch $@
 
-clean: clean-patched unpatch
+#	$(MAKE) -C src
+#	$(MAKE) -C swfs
 
-clean-patched:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp shared-lib-stamp python*-stamp
-
-	# Add here commands to clean up after the build process.
-	[ ! -f Makefile ] || $(MAKE) distclean
-	# lib/h.263, lib/devices, lib/gocr, and lib/readers should be cleaned from the lib/Makefile
-	rm -f lib/h.263/*.o
-	rm -f lib/devices/*.o
-	rm -f lib/gocr/*.o
-	rm -f lib/readers/*.o
-	# These should be cleaned by the main Makefile
-	rm -f config.log lib/readers/Makefile lib/action/Makefile lib/art/Makefile swfs/Makefile lib/pdf/Makefile lib/swf/Makefile src/swfrender
-	# Remove our own stuff
-	rm -rf lib/python/usr
-	rm -f config.guess config.sub
-
-
-	dh_clean 
-
-$(python_targets):
-	$(MAKE) -C lib/python clean
-	# Fix the PYHTON_LIB and PYTHON_INCLUDES in the Makefile.common
 	cp Makefile.common Makefile.common.bak
-	sed -i s,"^PYTHON_LIB=.*","PYTHON_LIB=/usr/lib/$@/$(call py_sitename_sh, $@)/PIL/_imaging.so", Makefile.common
-	sed -i s,"^PYTHON_INCLUDES=.*","PYTHON_INCLUDES=-I/usr/include/$@", Makefile.common
-	# Make the module
-	$(MAKE) -C lib/python
-	# Copy the module to safe, so we can compile another one
-	mkdir -p lib/python/usr/lib/$@/$(call py_sitename_sh, $@)
-	/usr/bin/install -m 644 lib/python/SWF.so lib/python/usr/lib/$@/$(call py_sitename_sh, $@)/SWF.so
+	$(foreach pp, $(python_versions), $(call build_python,$(pp),$(pp)/$(call py_sitename, $(pp))))
 	mv Makefile.common.bak Makefile.common
-	touch $@-stamp
 
-install: build $(python_targets)
-	dh_testdir
-	dh_testroot
-	dh_clean -k 
-	dh_installdirs
-
-	# Add here commands to install the package into debian/swftools.
+override_dh_auto_install:
+	dh_auto_install -- prefix=$(CURDIR)/debian/tmp/usr
 	mkdir -p debian/tmp/usr/lib
 	mkdir -p debian/tmp/usr/include/rfxswf
 	/usr/bin/install -m 644 lib/librfxswf.a debian/tmp/usr/lib/
 	/usr/bin/install -m 644 config.h lib/rfxswf.h lib/bitio.h lib/drawer.h lib/mem.h lib/types.h debian/tmp/usr/include/rfxswf/
-	
-	$(MAKE) -C src install prefix=$(CURDIR)/debian/tmp/usr
-	# Remove the fonts, since we use the gsfonts package
-	rm -rf debian/tmp/usr/share/swftools/fonts
-	# Don't install until it works without lame
-	# avi2swf is outdated anyway, so it will probaly be removed
-	# from the future releases
-	#$(MAKE) -C avi2swf install prefix=$(CURDIR)/debian/tmp/usr
-	$(MAKE) -C swfs install prefix=$(CURDIR)/debian/tmp/usr
-	
-	# Remove one dot from the rfxswf.h include line
 	sed -i s/"\(#include \"\.\)\.\(\/config\.h\"\)"/"\1\2"/ debian/tmp/usr/include/rfxswf/rfxswf.h
-	cp -a lib/python/usr debian/tmp/
+	cp -r lib/python/usr debian/tmp/
 
-# Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs ChangeLog
-	dh_installdocs
-	dh_installexamples
-	dh_install --list-missing --sourcedir=debian/tmp
-	dh_installman
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_pysupport
-	dh_makeshlibs -V
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.NOTPARALLEL:
-.PHONY: build clean binary-indep binary-arch binary install $(python_targets) unpatch clean-patched
+get-orig-source:
+	uscan --no-conf --force-download --rename --download-current-version --destdir=.
+	mkdir -p _unpack
+	tar -xzf $(ORIGTAR) -C _unpack
+	find _unpack  -maxdepth 1 -name "swftools*" -type d -exec mv \{} _unpack/swftools_$(ORIG_VERSION).orig \;
+	rm -rf _unpack/$(ORIGDIR)/lib/pdf/xpdf
+	rm -rf _unpack/$(ORIGDIR)/avi2swf
+	tar -czf $(DEBTAR) -C _unpack $(ORIGDIR)
+	rm -rf _unpack

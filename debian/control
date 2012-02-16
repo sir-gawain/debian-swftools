@@ -1,14 +1,13 @@
 Source: swftools
-Section: partner/utils
+Section: utils
 Priority: extra
-Maintainer: Brian Thomason <brian.thomason@canonical.com>
-XSBC-Original-Maintainer: Simo Kauppi <swk@nic.fi>
-Build-Depends: debhelper (>= 5.0.0), autotools-dev, dpatch (>= 2.0.21), libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg62-dev (>= 6b-13), libt1-dev (>= 5.1.0), libgif-dev (>= 4.1.4), zlib1g-dev (>= 1:1.2.3), libart-2.0-dev (>= 2.3.17), python-all-dev (>= 2.3.5), python-imaging (>= 1.1.5), python-support (>= 0.5.3)
-Standards-Version: 3.8.4
+Maintainer: Simo Kauppi <swk@nic.fi>
+X-Python-Version: >= 2.5
+Build-Depends: autoconf, debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg8-dev, libt1-dev (>= 5.1.0), libgif-dev (>= 4.1.4), libpoppler-dev, zlib1g-dev (>= 1:1.2.3), libart-2.0-dev (>= 2.3.17), python-all-dev (>= 2.6.6-3~), python-imaging (>= 1.1.5)
+Standards-Version: 3.9.2
 Homepage: http://www.swftools.org/
 
 Package: swftools
-Section: partner/utils
 Architecture: any
 Replaces: libming-util (<= 1:0.3.0-11.1)
 Conflicts: libming-util (<= 1:0.3.0-11.1)
@@ -31,15 +30,15 @@ Description: Collection of utilities for SWF file manipulation/creation
   * wav2swf converts WAV files into SWF.
   * swfcombine is a tool for inserting SWFs into Wrapper SWFs. (Templates)
     E.g. for including the pdf2swf SWFs into some sort of Browsing-SWF.
-  * swfextract allows to extract Movieclips, Sounds, Images etc. from SWF
+  * swfextract allows one to extract Movieclips, Sounds, Images etc. from SWF
     files.
   * swfdump prints out various information about SWFs.
   * swfstrings scans SWFs for text data.
-  * swfbbox allows to readjust SWF bounding boxes.
+  * swfbbox allows one to readjust SWF bounding boxes.
   * swfc is a tool for creating SWF files from simple script files.
 
 Package: python-rfxswf
-Section: partner/python
+Section: python
 Architecture: any
 Provides: ${python:Provides}
 Replaces: python2.4-rfxswf (<< 0.8.1-2)
@@ -53,7 +52,7 @@ Description: Python wrapper for the rfxswf library
  language. The rfxswf library is in the librfxswf-dev package.
 
 Package: librfxswf-dev
-Section: partner/libdevel
+Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg62-dev (>= 6b-13), libgif-dev (>= 4.1.4), libt1-dev (>= 5.1.0), zlib1g-dev (>= 1:1.2.3)
 Description: RFXSWF library for SWF (Flash) generation

@@ -1,5 +1,4 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## 03_configure.dpatch by Simo Kauppi <swk@nic.fi>
+## 03_configure.patch by Simo Kauppi <swk@nic.fi>
 ##
 ## All lines beginning with `## DP:' are a description of the patch.
 ## DP: This patch patches the configure script, which was generated
@@ -7,11 +6,9 @@
 ## DP: The only difference to the upstream is the avifile-config,
 ## DP: which gives rpath (see bug #347536).
 
-@DPATCH@
-diff -urNad swftools-0.8.1~/configure swftools-0.8.1/configure
---- swftools-0.8.1~/configure	2007-05-07 17:56:43.000000000 +0300
-+++ swftools-0.8.1/configure	2007-05-07 17:58:39.000000000 +0300
-@@ -9479,7 +9479,7 @@
+--- swftools_2011-12-15.orig/configure
++++ swftools_2011-12-15/configure
+@@ -6779,7 +6779,7 @@
  EOF
  
  if test "x$AVIFILE_CONFIG" '!=' "x";then

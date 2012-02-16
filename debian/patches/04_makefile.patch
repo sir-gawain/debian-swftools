@@ -1,5 +1,4 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## 04-makefile.dpatch by Simo Kauppi <swk@nic.fi>
+## 04-makefile.patch by Simo Kauppi <swk@nic.fi>
 ##
 ## All lines beginning with `## DP:' are a description of the patch.
 ## DP: This patch adds the LDFLAGS to linker in Makefile.common.in to pass
@@ -8,10 +7,8 @@
 ## DP: src/Makefile.in, because we use the Debian libart instead of the
 ## DP: one included in the upstream tar ball.
 
-@DPATCH@
-diff -urNad swftools-0.9.0~/Makefile.common.in swftools-0.9.0/Makefile.common.in
---- swftools-0.9.0~/Makefile.common.in	2009-04-12 23:27:16.000000000 +0000
-+++ swftools-0.9.0/Makefile.common.in	2009-05-06 03:38:30.000000000 +0000
+--- swftools_2011-12-15.orig/Makefile.common.in
++++ swftools_2011-12-15/Makefile.common.in
 @@ -11,8 +11,8 @@
  DEP=@CC@ -MM $(DEFS) $(INCLUDES) @CPPFLAGS@
  C=@CC@ -c $(DEFS) $(INCLUDES) @CPPFLAGS@ @CFLAGS@

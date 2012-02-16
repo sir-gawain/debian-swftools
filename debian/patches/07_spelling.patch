@@ -1,0 +1,83 @@
+Description: Fixes spelling errors not contained in man pages
+ See also 01_manpages.patch.
+Author: Christian Welzel <gawain@camlann.de>
+Last-Update: 2012-02-05
+
+--- swftools_0.9.1+20111215+ds1.orig/src/pdf2swf.c
++++ swftools_0.9.1+20111215+ds1/src/pdf2swf.c
+@@ -513,7 +513,7 @@
+     printf("\n");
+     printf("-h , --help                    Print short help message and exit\n");
+     printf("-V , --version                 Print version info and exit\n");
+-    printf("-o , --output file.swf         Direct output to file.swf. If file.swf contains '%%' (file%%.swf), then each page goes to a seperate file.\n");
++    printf("-o , --output file.swf         Direct output to file.swf. If file.swf contains '%%' (file%%.swf), then each page goes to a separate file.\n");
+     printf("-p , --pages range             Convert only pages in range with range e.g. 1-20 or 1,4,6,9-11 or\n");
+     printf("-P , --password password       Use password for deciphering the pdf.\n");
+     printf("-v , --verbose                 Be verbose. Use more than one -v for greater effect.\n");
+--- swftools_0.9.1+20111215+ds1.orig/src/swfc.c
++++ swftools_0.9.1+20111215+ds1/src/swfc.c
+@@ -2916,7 +2916,7 @@
+             break;
+         }
+     if(!inter->function)
+-        syntaxerror("unkown interpolation function %s", functionstr);
++        syntaxerror("unknown interpolation function %s", functionstr);
+     inter->speed = parseFloat(lu(args, "speed"));
+     inter->amplitude = parseTwip(lu(args, "amplitude"));
+     inter->growth = parseFloat(lu(args, "growth"));
+@@ -3347,7 +3347,7 @@
+                 const char* interstr = lu(args, "interpolation");
+                 interpolation_t* inter = (interpolation_t*)dict_lookup(&interpolations, interstr);
+                 if(!inter)
+-                    syntaxerror("unkown interpolation %s", interstr);
++                    syntaxerror("unknown interpolation %s", interstr);
+                 s_change(instance, p, inter);
+             }
+             break;
+@@ -3356,7 +3356,7 @@
+                 const char* interstr = lu(args, "interpolation");
+                 interpolation_t* inter = (interpolation_t*)dict_lookup(&interpolations, interstr);
+                 if(!inter)
+-                    syntaxerror("unkown interpolation %s", interstr);
++                    syntaxerror("unknown interpolation %s", interstr);
+             	s_schange(instance, p, inter);
+             }
+             break;
+@@ -3373,7 +3373,7 @@
+                 const char* interstr = lu(args, "interpolation");
+                 interpolation_t* inter = (interpolation_t*)dict_lookup(&interpolations, interstr);
+                 if(!inter)
+-                    syntaxerror("unkown interpolation %s", interstr);
++                    syntaxerror("unknown interpolation %s", interstr);
+             	s_sweep(instance, p, radius, clockwise, short_arc, inter);
+             }
+             break;
+@@ -3653,7 +3653,7 @@
+                 const char* interstr = lu(args, "interpolation");
+                 interpolation_t* inter = (interpolation_t*)dict_lookup(&interpolations, interstr);
+                 if(!inter)
+-                    syntaxerror("unkown interpolation %s", interstr);
++                    syntaxerror("unknown interpolation %s", interstr);
+                 s_change(instance, p, inter);
+             }
+             break;
+@@ -3662,7 +3662,7 @@
+                 const char* interstr = lu(args, "interpolation");
+                 interpolation_t* inter = (interpolation_t*)dict_lookup(&interpolations, interstr);
+                 if(!inter)
+-                    syntaxerror("unkown interpolation %s", interstr);
++                    syntaxerror("unknown interpolation %s", interstr);
+             	s_schange(instance, p, inter);
+             }
+             break;
+--- swftools_0.9.1+20111215+ds1.orig/src/swfcombine.c
++++ swftools_0.9.1+20111215+ds1/src/swfcombine.c
+@@ -309,7 +309,7 @@
+     printf("OR:    %s [-rXYomlcv] --dummy [-xys] [file]\n", name);
+     printf("\n");
+     printf("-o , --output <outputfile>      explicitly specify output file. (otherwise, output.swf will be used)\n");
+-    printf("-t , --stack                   place each slave in a seperate frame (no master movie)\n");
++    printf("-t , --stack                   place each slave in a separate frame (no master movie)\n");
+     printf("-T , --stack1                  place each slave in the first frame (no master movie)\n");
+     printf("-m , --merge                   Don't store the slaves in Sprites/MovieClips\n");
+     printf("-a , --cat                     concatenate all slave files (no master movie)\n");
