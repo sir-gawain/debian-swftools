@@ -43,6 +43,7 @@
 #include "../lib/devices/polyops.h"
 #include "../lib/devices/record.h"
 #include "../lib/devices/rescale.h"
+#include "../lib/gfxfilter.h"
 #include "../lib/pdf/pdf.h"
 #include "../lib/log.h"
 
@@ -70,6 +71,8 @@ static int info_only = 0;
 static int max_time = 0;
 
 static int flatten = 0;
+
+static char* filters = 0;
 
 char* fontpaths[256];
 int fontpathpos = 0;
@@ -257,7 +260,7 @@ int args_callback_option(char*name,char*val) {
     }
     else if (!strcmp(name, "s"))
     {
-	char*s = strdup(val);
+	char*s = val;
 	char*c = strchr(s, '=');
 	if(c && *c && c[1])  {
 	    *c = 0;
@@ -266,7 +269,7 @@ int args_callback_option(char*name,char*val) {
 	} else if(!strcmp(s,"help")) {
 	    printf("PDF Parameters:\n");
 	    gfxsource_t*pdf = gfxsource_pdf_create();
-	    pdf->set_parameter(pdf, "help", "");
+	    pdf->setparameter(pdf, "help", "");
 	    gfxdevice_t swf;
 	    gfxdevice_swf_init(&swf);
 	    printf("SWF Parameters:\n");
@@ -333,6 +336,20 @@ int args_callback_option(char*name,char*val) {
 	store_parameter("storeallcharacters", "1");
 	store_parameter("extrafontdata", "1");
 	return 0;
+    }
+    else if (!strcmp(name, "ff"))
+    {
+	if(filters) {
+	    // append this to the current filter expression (we allow more than one --filter)
+	    int l = strlen(filters);
+	    int new_len = l + strlen(val) + 2;
+	    filters = (char*)realloc(filters, new_len);
+	    filters[l] = ':';
+	    strcpy(filters+l+1, val);
+	} else {
+	    filters = strdup(val);
+	}
+	return 1;
     }
     else if (!strcmp(name, "w"))
     {
@@ -454,6 +471,7 @@ static struct options_t options[] = {
 {"t", "stop"},
 {"T", "flashversion"},
 {"F", "fontdir"},
+{"ff", "filter"},
 {"b", "defaultviewer"},
 {"l", "defaultloader"},
 {"B", "viewer"},
@@ -588,6 +606,16 @@ gfxdevice_t*create_output_device()
         out = &rescale;
     }
 
+    if(filters) {
+	gfxfilterchain_t*chain = gfxfilterchain_parse(filters);
+	if(!chain) {
+	    fprintf(stderr, "Unable to parse filters: %s\n", filters);
+	    exit(1);
+	}
+	out = gfxfilterchain_apply(chain, out);
+	gfxfilterchain_destroy(chain);
+    }
+
     /* pass global parameters to output device */
     parameter_t*p = device_config;
     while(p) {
@@ -630,7 +658,7 @@ int main(int argn, char *argv[])
     /* pass global parameters to PDF driver*/
     parameter_t*p = device_config;
     while(p) {
-	driver->set_parameter(driver, p->name, p->value);
+	driver->setparameter(driver, p->name, p->value);
 	p = p->next;
     }
 
@@ -640,45 +668,47 @@ int main(int argn, char *argv[])
 	exit(1);
     }
 
-    if(info_only) {
-	show_info(driver, filename);
-	return 0;
-    }
-
-    if(!outputname)
-    {
-	if(filename) {
-	    outputname = stripFilename(filename, ".swf");
-	    msg("<notice> Output filename not given. Writing to %s", outputname);
-	} 
-    }
-	
-    if(!outputname)
-    {
-	fprintf(stderr, "Please use -o to specify an output file\n");
-	exit(1);
+    if (!info_only) {
+        if(!outputname)
+        {
+            if(filename) {
+                outputname = stripFilename(filename, ".swf");
+                msg("<notice> Output filename not given. Writing to %s", outputname);
+            } 
+        }
+            
+        if(!outputname)
+        {
+            fprintf(stderr, "Please use -o to specify an output file\n");
+            exit(1);
+        }
     }
 
     // test if the page range is o.k.
     is_in_range(0x7fffffff, pagerange);
 
-    if(pagerange)
-	driver->set_parameter(driver, "pages", pagerange);
-
     if (!filename) {
 	args_callback_usage(argv[0]);
 	exit(0);
     }
-
-    /* add fonts */
-    for(t=0;t<fontpathpos;t++) {
-	driver->set_parameter(driver, "fontdir", fontpaths[t]);
-    }
-
+    
     char fullname[256];
     if(password && *password) {
 	sprintf(fullname, "%s|%s", filename, password);
 	filename = fullname;
+    }
+    
+    if(pagerange)
+	driver->setparameter(driver, "pages", pagerange);
+
+    /* add fonts */
+    for(t=0;t<fontpathpos;t++) {
+	driver->setparameter(driver, "fontdir", fontpaths[t]);
+    }
+
+    if(info_only) {
+	show_info(driver, filename);
+	return 0;
     }
 
     char*u = 0;
@@ -711,7 +741,7 @@ int main(int argn, char *argv[])
     /* pass global parameters document */
     p = device_config;
     while(p) {
-	pdf->set_parameter(pdf, p->name, p->value);
+	pdf->setparameter(pdf, p->name, p->value);
 	p = p->next;
     }
 
@@ -730,7 +760,7 @@ int main(int argn, char *argv[])
 	if(is_in_range(pagenr, pagerange)) {
 	    char mapping[80];
 	    sprintf(mapping, "%d:%d", pagenr, frame);
-	    pdf->set_parameter(pdf, "pagemap", mapping);
+	    pdf->setparameter(pdf, "pagemap", mapping);
 	    pagenum++;
 	}
 	if(pagenum == xnup*ynup || (pagenr == pdf->num_pages && pagenum>1)) {
@@ -738,10 +768,16 @@ int main(int argn, char *argv[])
 	    frame++;
 	}
     }
+    if(pagerange && !pagenum && frame==1) {
+	fprintf(stderr, "No pages in range %s", pagerange);
+	exit(1);
+    }
 
     pagenum = 0;
 
     gfxdevice_t*out = create_output_device();;
+    pdf->prepare(pdf, out);
+
     for(pagenr = 1; pagenr <= pdf->num_pages; pagenr++) 
     {
 	if(is_in_range(pagenr, pagerange)) {
@@ -813,6 +849,7 @@ int main(int argn, char *argv[])
 		}
 		result->destroy(result);result=0;
 		out = create_output_device();;
+                pdf->prepare(pdf, out);
 		msg("<notice> Writing SWF file %s", buf);
 	    }
 	}
@@ -878,6 +915,9 @@ int main(int argn, char *argv[])
 	if(p->value) free((void*)p->value);p->value =0;
 	p->next = 0;free(p);
 	p = next;
+    }
+    if(filters) {
+	free(filters);
     }
 
     return 0;

@@ -128,33 +128,34 @@ int main(int argn, char*argv[])
 	fi = open(filename, O_RDONLY|O_BINARY);
 	if (fi<=0) { 
 	    fprintf(stderr,"Couldn't open %s\n", filename);
-	    perror(argv[1]);
+	    perror(filename);
 	    exit(1);
 	}
 	if(swf_ReadSWF(fi,&swf)<0) { 
 	    fprintf(stderr,"%s is not a valid SWF file or contains errors.\n",argv[1]);
 	    close(fi);
 	}
+	assert(swf.movieSize.xmax > swf.movieSize.xmin && swf.movieSize.ymax > swf.movieSize.ymin);
 	RENDERBUF buf;
 	swf_Render_Init(&buf, 0,0, (swf.movieSize.xmax - swf.movieSize.xmin) / 20,
 				   (swf.movieSize.ymax - swf.movieSize.ymin) / 20, 2, 1);
 	swf_RenderSWF(&buf, &swf);
 	RGBA* img = swf_Render(&buf);
         if(quantize)
-	    writePalettePNG(outputname, (unsigned char*)img, buf.width, buf.height);
+	    png_write_palette_based_2(outputname, (unsigned char*)img, buf.width, buf.height);
         else
-	    writePNG(outputname, (unsigned char*)img, buf.width, buf.height);
+	    png_write(outputname, (unsigned char*)img, buf.width, buf.height);
 	swf_Render_Delete(&buf);
     } else {
 	parameter_t*p;
 
 	gfxsource_t*src = gfxsource_swf_create();
 	for(p=params;p;p=p->next) {
-	    src->set_parameter(src, p->name, p->value);
+	    src->setparameter(src, p->name, p->value);
 	}
 	gfxdocument_t*doc = src->open(src, filename);
 	for(p=params;p;p=p->next) {
-	    doc->set_parameter(doc, p->name, p->value);
+	    doc->setparameter(doc, p->name, p->value);
 	}
 	if(!doc) {
 	    fprintf(stderr,"Couldn't open %s\n", filename);
