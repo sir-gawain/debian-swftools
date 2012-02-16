@@ -3,7 +3,7 @@ Section: utils
 Priority: extra
 Maintainer: Simo Kauppi <swk@nic.fi>
 X-Python-Version: >= 2.5
-Build-Depends: autoconf, debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg8-dev, libt1-dev (>= 5.1.0), libgif-dev (>= 4.1.4), libpoppler-dev, zlib1g-dev (>= 1:1.2.3), libart-2.0-dev (>= 2.3.17), python-all-dev (>= 2.6.6-3~), python-imaging (>= 1.1.5)
+Build-Depends: autoconf, automake, debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg8-dev, libt1-dev (>= 5.1.0), libgif-dev (>= 4.1.4), libpoppler-dev, zlib1g-dev (>= 1:1.2.3), libart-2.0-dev (>= 2.3.17), python-all-dev (>= 2.6.6-3~), python-imaging (>= 1.1.5)
 Standards-Version: 3.9.2
 Homepage: http://www.swftools.org/
 
