@@ -1,6 +1,6 @@
 swftools (0.9.1+201202040819+ds1-1) unstable; urgency=low
 
-  * New maintainer.
+  * New maintainer (Closes: 583982).
   * New upstream release.
   * Bump Standards Version to 3.9.2.
   * Switch to source format 3.0 (quilt), remove dpatch, rename patch files.
