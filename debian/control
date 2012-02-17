@@ -16,26 +16,32 @@ Suggests: gs-common
 Description: Collection of utilities for SWF file manipulation/creation
  SWF Tools is a collection of SWF (Flash) manipulation and creation utilities.
  .
- This package includes: pdf2swf, jpeg2swf, png2swf, gif2swf, font2swf,
- wav2swf, swfcombine, swfextract, swfdump, swfstrings, swfbbox and swfc.
+ This package includes: as3compile, font2swf, gif2swf, jpeg2swf, png2swf,
+ swfcombine, swfextract, swfdump, swfrender, swfstrings, swfbbox, swfc and
+ wav2swf.
  .
+  * as3compile is a standalone ActionScript 3.0 compiler. Mostly compatible
+    with Flex.
+  * font2swf converts font files (TTF, Type1) into SWF.
+  * gif2swf converts GIFs into SWF. It is also able to handle animated gifs.
+  * jpeg2swf takes one or more JPEG pictures and generates an SWF slideshow.
   * pdf2swf is a PDF to SWF Converter. It generates one frame per page and
     enables you to have fully formatted text, including tables, formulas etc.
     inside your Flash Movie. It's based on the xpdf PDF parser from
-    Derek B. Noonburg.
-  * jpeg2swf takes one or more JPEG pictures and generates an SWF slideshow.
+    Derek B. Noonburg
   * png2swf takes one or more PNG pictures and generates an SWF slideshow.
-  * gif2swf converts GIFs into SWF. It is also able to handle animated gifs.
-  * font2swf converts font files (TTF, Type1) into SWF.
-  * wav2swf converts WAV files into SWF.
   * swfcombine is a tool for inserting SWFs into Wrapper SWFs. (Templates)
     E.g. for including the pdf2swf SWFs into some sort of Browsing-SWF.
   * swfextract allows one to extract Movieclips, Sounds, Images etc. from SWF
     files.
   * swfdump prints out various information about SWFs.
+  * swfrender converts a swf to an image.
   * swfstrings scans SWFs for text data.
   * swfbbox allows one to readjust SWF bounding boxes.
   * swfc is a tool for creating SWF files from simple script files.
+  * wav2swf converts WAV files into SWF.
+ .
+ This package does not include avi2swf.
 
 Package: python-rfxswf
 Section: python
