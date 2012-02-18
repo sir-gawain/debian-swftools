@@ -9,8 +9,6 @@ Homepage: http://www.swftools.org/
 
 Package: swftools
 Architecture: any
-Replaces: libming-util (<= 1:0.3.0-11.1)
-Conflicts: libming-util (<= 1:0.3.0-11.1)
 Depends: ${shlibs:Depends}, ${misc:Depends}, gsfonts
 Suggests: gs-common
 Description: Collection of utilities for SWF file manipulation/creation
