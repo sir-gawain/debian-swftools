@@ -79,7 +79,7 @@ override_dh_auto_build:
 #	$(MAKE) -C swfs
 
 	cp Makefile.common Makefile.common.bak
-	$(foreach pp, $(python_versions), $(call build_python,$(pp),$(pp)/$(call py_sitename, $(pp))))
+#	$(foreach pp, $(python_versions), $(call build_python,$(pp),$(pp)/$(call py_sitename, $(pp))))
 	mv Makefile.common.bak Makefile.common
 
 override_dh_auto_install:
@@ -89,7 +89,7 @@ override_dh_auto_install:
 	/usr/bin/install -m 644 lib/librfxswf.a debian/tmp/usr/lib/
 	/usr/bin/install -m 644 config.h lib/rfxswf.h lib/bitio.h lib/drawer.h lib/mem.h lib/types.h debian/tmp/usr/include/rfxswf/
 	sed -i s/"\(#include \"\.\)\.\(\/config\.h\"\)"/"\1\2"/ debian/tmp/usr/include/rfxswf/rfxswf.h
-	cp -r lib/python/usr debian/tmp/
+#	cp -r lib/python/usr debian/tmp/
 
 get-orig-source:
 	uscan --no-conf --force-download --rename --download-current-version --destdir=.
