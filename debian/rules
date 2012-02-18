@@ -59,10 +59,10 @@ clean:
 
 override_dh_auto_configure:
 	dh_autotools-dev_updateconfig
-	mv configure configure.dist
-	aclocal -I m4
-	autoconf
-	LDFLAGS="-Wl,-z,defs" ./configure --enable-debug --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-lame --enable-poppler $(CFGFLAGS)
+#	mv configure configure.dist
+#	aclocal -I m4
+#	autoconf
+	LDFLAGS="-Wl,-z,defs" ./configure --enable-debug --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-lame --disable-poppler $(CFGFLAGS)
 
 override_dh_auto_build:
 	# Add libart stuff into the Makefile.common

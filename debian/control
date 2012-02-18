@@ -3,7 +3,7 @@ Section: utils
 Priority: extra
 Maintainer: Simo Kauppi <swk@nic.fi>
 X-Python-Version: >= 2.5
-Build-Depends: autoconf, automake, debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg8-dev, libt1-dev (>= 5.1.0), libgif-dev (>= 4.1.4), libpoppler-dev, zlib1g-dev (>= 1:1.2.3), libart-2.0-dev (>= 2.3.17), python-all-dev (>= 2.6.6-3~), python-imaging (>= 1.1.5)
+Build-Depends: debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev, libfreetype6-dev, libjpeg8-dev, libt1-dev, libgif-dev, zlib1g-dev, python-all-dev (>= 2.6.6-3~), python-imaging
 Standards-Version: 3.9.2
 Homepage: http://www.swftools.org/
 
@@ -23,10 +23,6 @@ Description: Collection of utilities for SWF file manipulation/creation
   * font2swf converts font files (TTF, Type1) into SWF.
   * gif2swf converts GIFs into SWF. It is also able to handle animated gifs.
   * jpeg2swf takes one or more JPEG pictures and generates an SWF slideshow.
-  * pdf2swf is a PDF to SWF Converter. It generates one frame per page and
-    enables you to have fully formatted text, including tables, formulas etc.
-    inside your Flash Movie. It's based on the xpdf PDF parser from
-    Derek B. Noonburg
   * png2swf takes one or more PNG pictures and generates an SWF slideshow.
   * swfcombine is a tool for inserting SWFs into Wrapper SWFs. (Templates)
     E.g. for including the pdf2swf SWFs into some sort of Browsing-SWF.
@@ -39,7 +35,7 @@ Description: Collection of utilities for SWF file manipulation/creation
   * swfc is a tool for creating SWF files from simple script files.
   * wav2swf converts WAV files into SWF.
  .
- This package does not include avi2swf.
+ This package does not include pdf2swf and avi2swf.
 
 Package: python-rfxswf
 Section: python

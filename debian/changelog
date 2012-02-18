@@ -6,8 +6,7 @@ swftools (0.9.1+201202040819+ds1-1) unstable; urgency=low
   * Switch to source format 3.0 (quilt), remove dpatch, rename patch files.
   * Raise dh compat level to 7.
   * debian/rules completely rewritten.
-  * Add build-depends on autoconf, autotools-dev, flex, libjpeg8-dev,
-    libpoppler-dev.
+  * Add build-depends on autotools-dev, flex, libjpeg8-dev.
   * Refresh patches.
   * Remove 02_faq.patch (file FAQ removed from upstream source).
   * README.source rewritten.

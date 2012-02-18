@@ -1,0 +1,65 @@
+--- swftools.orig/lib/Makefile.in
++++ swftools/lib/Makefile.in
+@@ -3,7 +3,7 @@
+ top_srcdir = @top_srcdir@
+ include ../Makefile.common
+ 
+-all: librfxswf$(A) libgfxpdf$(A) libbase$(A) libgfx$(A) libgfxswf$(A) libocr$(A)
++all: librfxswf$(A) libbase$(A) libgfx$(A) libgfxswf$(A) libocr$(A)
+ 
+ lame_objects = lame/psymodel.$(O) lame/fft.$(O) lame/newmdct.$(O) lame/quantize.$(O) lame/takehiro.$(O) lame/reservoir.$(O) lame/quantize_pvt.$(O) lame/vbrquantize.$(O) lame/encoder.$(O) lame/id3tag.$(O) lame/version.$(O) lame/tables.$(O) lame/util.$(O) lame/bitstream.$(O) lame/set_get.$(O) lame/VbrTag.$(O) lame/lame.$(O)
+ lame_in_source = @lame_in_source@
+@@ -188,8 +188,8 @@
+ 	$(AR) r librfxswf$(A) $(rfxswf_objects) rfxswf.$(O) drawer.$(O) $(lame_in_source) $(h263_objects) $(as12compiler_in_source) $(as3compiler_objects)
+ 	$(RANLIB) librfxswf$(A)
+ 
+-libgfxpdf$(A): pdf/VectorGraphicOutputDev.cc pdf/VectorGraphicOutputDev.h pdf/pdf.cc pdf/pdf.h
+-	cd pdf;$(MAKE) libgfxpdf
++#libgfxpdf$(A): pdf/VectorGraphicOutputDev.cc pdf/VectorGraphicOutputDev.h pdf/pdf.cc pdf/pdf.h
++#	cd pdf;$(MAKE) libgfxpdf
+ 
+ tests: png.test.c
+ 	$(L) png.test.c -o png.test $(LIBS)
+--- swftools.orig/src/Makefile.in
++++ swftools/src/Makefile.in
+@@ -3,7 +3,7 @@
+ top_srcdir = @top_srcdir@
+ include ../Makefile.common
+ 
+-install_programs = wav2swf$(E) @PNG2SWF@ swfcombine$(E) swfstrings$(E) swfextract$(E) swfdump$(E) swfc$(E) @JPEG2SWF@ @GIF2SWF@ swfbbox$(E) font2swf$(E) swfrender$(E) as3compile$(E) @PDF2SWF@ @PDF2PDF@
++install_programs = wav2swf$(E) @PNG2SWF@ swfcombine$(E) swfstrings$(E) swfextract$(E) swfdump$(E) swfc$(E) @JPEG2SWF@ @GIF2SWF@ swfbbox$(E) font2swf$(E) swfrender$(E) as3compile$(E) @PDF2PDF@
+ programs = $(install_programs) swfbytes$(E) ttftool$(E)
+ 
+ all: $(programs)
+@@ -12,8 +12,6 @@
+ 	$(C) wav2swf.c -o $@
+ png2swf.$(O): png2swf.c
+ 	$(C) png2swf.c -o $@
+-pdf2swf.$(O): pdf2swf.c
+-	$(C) pdf2swf.c -o $@
+ pdf2pdf.$(O): pdf2pdf.c
+ 	$(C) pdf2pdf.c -o $@
+ gfx2gfx.$(O): gfx2gfx.c
+@@ -120,9 +118,6 @@
+ PDF2SWF_OBJ=../lib/libgfxswf$(A) ../lib/librfxswf$(A) ../lib/libgfxpdf$(A) ../lib/libgfx$(A) ../lib/libbase$(A)
+ OCR_OBJ=../lib/libocr$(A)
+ 
+-pdf2swf$(E): pdf2swf.$(O) $(PDF2SWF_OBJ)
+-	$(LL) pdf2swf.$(O) -o $@ $(PDF2SWF_OBJ) $(LIBS) $(CXXLIBS)
+-	$(STRIP) $@
+ pdf2pdf$(E): pdf2pdf.$(O) $(PDF2SWF_OBJ)
+ 	$(LL) pdf2pdf.$(O) -o $@ $(PDF2SWF_OBJ) $(LIBS) $(CXXLIBS)
+ 	$(STRIP) $@
+@@ -143,9 +138,9 @@
+ 
+ clean: 
+ 	rm -f *.o *.obj *.lo *.la *~ gmon.out
+-	rm -f as3compile gif2swf swfbbox swfbytes swfbytes swfdump pdf2swf wav2swf png2swf swfcombine swfextract swfstrings png2swf jpeg2swf swfc font2swf pdf2pdf gfx2gfx swfrender ttftool
+-	@rm -f as3compile.exe gif2swf.exe swfbytes.exe swfbytes.exe pdf2swf.exe swfbbox.exe swfdump.exe wav2swf.exe png2swf.exe swfcombine.exe swfextract.exe swfstrings.exe png2swf.exe jpeg2swf.exe swfc.exe font2swf.exe pdf2pdf.exe gfx2gfx.exe swfrender.exe ttftool.exe
+-	@rm -f as3compile$(E) gif2swf$(E) pdf2swf$(E) swfbytes$(E) swfbytes$(E) swfbbox$(E) swfdump$(E) wav2swf$(E) png2swf$(E) swfcombine$(E) swfextract$(E) swfstrings$(E) png2swf$(E) jpeg2swf$(E) swfc$(E) font2swf$(E) pdf2pdf$(E) gfx2gfx$(E) swfrender$(E) ttftool$(E)
++	rm -f as3compile gif2swf swfbbox swfbytes swfbytes swfdump wav2swf png2swf swfcombine swfextract swfstrings png2swf jpeg2swf swfc font2swf pdf2pdf gfx2gfx swfrender ttftool
++	@rm -f as3compile.exe gif2swf.exe swfbytes.exe swfbytes.exe swfbbox.exe swfdump.exe wav2swf.exe png2swf.exe swfcombine.exe swfextract.exe swfstrings.exe png2swf.exe jpeg2swf.exe swfc.exe font2swf.exe pdf2pdf.exe gfx2gfx.exe swfrender.exe ttftool.exe
++	@rm -f as3compile$(E) gif2swf$(E) swfbytes$(E) swfbytes$(E) swfbbox$(E) swfdump$(E) wav2swf$(E) png2swf$(E) swfcombine$(E) swfextract$(E) swfstrings$(E) png2swf$(E) jpeg2swf$(E) swfc$(E) font2swf$(E) pdf2pdf$(E) gfx2gfx$(E) swfrender$(E) ttftool$(E)
+ 
+ doc:
+ 	perl ../parsedoc.pl wav2swf.doc
