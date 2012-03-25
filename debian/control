@@ -1,7 +1,7 @@
 Source: swftools
 Section: utils
 Priority: extra
-Maintainer: Simo Kauppi <swk@nic.fi>
+Maintainer: Christian Welzel <gawain@camlann.de>
 X-Python-Version: >= 2.5
 Build-Depends: debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev, libfreetype6-dev, libjpeg8-dev, libt1-dev, libgif-dev, zlib1g-dev, python-all-dev (>= 2.6.6-3~), python-imaging
 Standards-Version: 3.9.2
