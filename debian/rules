@@ -53,34 +53,34 @@ clean:
 	rm -f aclocal.m4 config.h config.log lib/action/Makefile swfs/Makefile lib/pdf/Makefile lib/swf/Makefile
 	rm -f _pypath.py _pypath.txt
 	rm -rf lib/python/usr
-	[ ! -f configure.dist ] || mv configure.dist configure
+#	[ ! -f configure.dist ] || mv configure.dist configure
 	dh_autotools-dev_restoreconfig
 	dh_clean
 
 override_dh_auto_configure:
 	dh_autotools-dev_updateconfig
 #	mv configure configure.dist
-#	aclocal -I m4
-#	autoconf
+	aclocal -I m4
+	autoconf
 	LDFLAGS="-Wl,-z,defs" ./configure --enable-debug --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --disable-lame --disable-poppler $(CFGFLAGS)
 
-override_dh_auto_build:
-	# Add libart stuff into the Makefile.common
-	cp Makefile.common Makefile.common.bak
+#override_dh_auto_build:
+#	# Add libart stuff into the Makefile.common
+#	cp Makefile.common Makefile.common.bak
 #	echo "C += $(LIBART_CFLAGS)" >>Makefile.common
 #	echo "CC += $(LIBART_CFLAGS)" >>Makefile.common
 #	echo "LIBS += $(LIBART_LIBS)" >>Makefile.common
-	$(MAKE)
+#	$(MAKE)
 #	$(MAKE) -C lib
 
-	mv Makefile.common.bak Makefile.common
+#	mv Makefile.common.bak Makefile.common
 
 #	$(MAKE) -C src
 #	$(MAKE) -C swfs
 
-	cp Makefile.common Makefile.common.bak
+#	cp Makefile.common Makefile.common.bak
 #	$(foreach pp, $(python_versions), $(call build_python,$(pp),$(pp)/$(call py_sitename, $(pp))))
-	mv Makefile.common.bak Makefile.common
+#	mv Makefile.common.bak Makefile.common
 
 override_dh_auto_install:
 	dh_auto_install -- prefix=$(CURDIR)/debian/tmp/usr
