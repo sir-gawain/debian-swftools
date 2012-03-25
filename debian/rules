@@ -9,26 +9,10 @@ ORIGTAR = swftools_$(ORIG_VERSION).orig.tar.gz
 ORIGDIR = swftools_$(ORIG_VERSION).orig
 DEBTAR = swftools_$(SRC_VERSION).orig.tar.gz
 
-include /usr/share/python/python.mk
-
 # These are used for cross-compiling and for saving the configure script
 # from having to guess our platform (since we know it already)
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
-
-python_versions = $(shell pyversions -s)
-
-#LIBART_LIBS = -L/usr/lib -lart_lgpl_2
-#LIBART_CFLAGS = -I/usr/include/libart-2.0
-
-define build_python
-	$(MAKE) -C lib/python clean
-	sed -i s,"^PYTHON_LIB=.*","PYTHON_LIB=-l$(1) /usr/lib/$(2)/PIL/_imaging.so", Makefile.common
-	sed -i s,"^PYTHON_INCLUDES=.*","PYTHON_INCLUDES=-I/usr/include/$(1)", Makefile.common
-	$(MAKE) -C lib/python SWF.so
-	mkdir -p lib/python/usr/lib/$(2)
-	mv lib/python/SWF.so lib/python/usr/lib/$(2)/SWF.so;
-endef
 
 # --enable-warnings sets CFLAGS to
 # "-Wall -Wno-unused -Wno-format -Wno-redundant-decls"
@@ -42,7 +26,7 @@ endef
 #endif
 
 %:
-	dh $@ --with python2
+	dh $@
 
 clean:
 	dh_testdir

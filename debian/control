@@ -2,9 +2,8 @@ Source: swftools
 Section: utils
 Priority: extra
 Maintainer: Christian Welzel <gawain@camlann.de>
-X-Python-Version: >= 2.5
-Build-Depends: debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev, libfreetype6-dev, libjpeg8-dev, libt1-dev, libgif-dev, zlib1g-dev, python-all-dev (>= 2.6.6-3~), python-imaging
-Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev, libfreetype6-dev, libjpeg8-dev, libt1-dev, libgif-dev, zlib1g-dev
+Standards-Version: 3.9.3
 Homepage: http://www.swftools.org/
 
 Package: swftools
@@ -36,31 +35,3 @@ Description: Collection of utilities for SWF file manipulation/creation
   * wav2swf converts WAV files into SWF.
  .
  This package does not include pdf2swf and avi2swf.
-
-Package: python-rfxswf
-Section: python
-Architecture: any
-Provides: ${python:Provides}
-Replaces: python2.4-rfxswf (<< 0.8.1-2)
-Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}, python-imaging (>= 1.1.5-11)
-Description: Python wrapper for the rfxswf library
- RFXSWF library is a fully featured library which can be used for standalone
- SWF generation. It includes support for Bitmaps, Buttons, Shapes, Text, Fonts,
- Sound etc. It also has support for ActionScript using the Ming ActionCompiler.
- .
- This is the wrapper for using the rfxswf library from the Python scripting
- language. The rfxswf library is in the librfxswf-dev package.
-
-Package: librfxswf-dev
-Section: libdevel
-Architecture: any
-Depends: ${misc:Depends}, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg62-dev (>= 6b-13), libgif-dev (>= 4.1.4), libt1-dev (>= 5.1.0), zlib1g-dev (>= 1:1.2.3)
-Description: RFXSWF library for SWF (Flash) generation
- RFXSWF library is a fully featured library which can be used for standalone
- SWF generation. It includes support for Bitmaps, Buttons, Shapes, Text, Fonts,
- Sound etc. It also has support for ActionScript using the Ming ActionCompiler.
- .
- This package includes the static library and the header files.
- .
- There is also a wrapper for using the rfxswf library from the Python scripting
- language. The wrapper is in the python2.x-rfxswf package.
