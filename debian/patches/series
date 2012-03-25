@@ -5,3 +5,4 @@
 07_spelling.patch
 08-add-swfrender-manpage.patch
 09-remove-pdf2swf.patch
+disable-avi2swf-in-configurein.patch
