@@ -2,7 +2,7 @@ swftools (0.9.1+201202040819+ds1-1) unstable; urgency=low
 
   * New maintainer (Closes: 583982).
   * New upstream release.
-  * Bump Standards Version to 3.9.2.
+  * Bump Standards Version to 3.9.3.
   * Switch to source format 3.0 (quilt), remove dpatch, rename patch files.
   * Raise dh compat level to 7.
   * debian/rules completely rewritten.
@@ -15,7 +15,7 @@ swftools (0.9.1+201202040819+ds1-1) unstable; urgency=low
     in debian are later than this one.
   * Updated watch file.
 
- -- Christian Welzel <gawain@camlann.de>  Sun, 29 Jan 2012 12:42:54 +0100
+ -- Christian Welzel <gawain@camlann.de>  Sun, 1 Apr 2012 12:42:54 +0100
 
 swftools (0.9.0-0ubuntu2) lucid; urgency=low
 
