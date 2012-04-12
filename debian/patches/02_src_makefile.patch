@@ -2,8 +2,8 @@ Description: Modify upstreams Makefiles to clean correctly
 Author: Christian Welzel <gawain@camlann.de>
 Last-Update: 2012-02-05
 
---- swftools-0.9.1+201202040819+ds1.orig/Makefile.in
-+++ swftools-0.9.1+201202040819+ds1/Makefile.in
+--- swftools.orig/Makefile.in
++++ swftools/Makefile.in
 @@ -16,8 +16,6 @@
  	cd lib/python;$(MAKE) $@
  	@echo making $@ in lib/ruby...
@@ -13,23 +13,3 @@ Last-Update: 2012-02-05
  	@echo making $@ in swfs...
  	cd swfs;$(MAKE) $@
  	@$(MAKE) $@-local
-@@ -25,7 +23,7 @@
- distclean:
- 	$(MAKE) clean
- 	rm -f config.status config.cache config.h Makefile Makefile.common libtool
--	rm -f lib/lame/Makefile lib/python/Makefile lib/Makefile src/Makefile avi2swf/Makefile pdf2swf/fonts/Makefile
-+	rm -f lib/readers/Makefile lib/lame/Makefile lib/python/Makefile lib/Makefile src/Makefile pdf2swf/fonts/Makefile
- 
- clean-local:
- 	rm -f config.cache gmon.out
---- swftools-0.9.1+201202040819+ds1.orig/m4/Makefile
-+++ swftools-0.9.1+201202040819+ds1/m4/Makefile
-@@ -1,7 +1,7 @@
- # simple pmake detecting Makefile
- 
- all: clear  test.o
--clean: all
-+clean: clear
- install:
- uninstall:
- 

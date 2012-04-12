@@ -6,8 +6,8 @@
 ## DP: Fixes also the minus signs in swfextract.1, swfdump.1, swfbbox.1,
 ## DP: font2swf.1, pdf2swf.1, wav2swf.1 and swfcombine.1 manpages.
 
---- swftools-0.9.1+201202040819+ds1.orig/src/font2swf.1
-+++ swftools-0.9.1+201202040819+ds1/src/font2swf.1
+--- swftools.orig/src/font2swf.1
++++ swftools/src/font2swf.1
 @@ -20,7 +20,7 @@
      Print short help message and exit
  .TP
@@ -17,12 +17,12 @@
  .TP
  \fB\-o\fR, \fB\-\-output\fR \fIfilename\fR
      Write output to file \fIfilename\fR. (If not given, the output will go
---- swftools-0.9.1+201202040819+ds1.orig/src/jpeg2swf.1
-+++ swftools-0.9.1+201202040819+ds1/src/jpeg2swf.1
+--- swftools.orig/src/jpeg2swf.1
++++ swftools/src/jpeg2swf.1
 @@ -8,7 +8,7 @@
  .SH DESCRIPTION
  This tool converts jpeg image files into an SWF animation. It takes any
- number of input pictures, and converts them to SWF one-by-one, where every
+ number of input pictures, and converts them to SWF one\-by\-one, where every
 -converted picture is a seperate frame in the target SWF.
 +converted picture is a separate frame in the target SWF.
  
@@ -32,12 +32,12 @@
      Make importable as asset with \fIassetname\fR
  .SH AUTHORS
  
--Rainer Böhme <rfxswf@reflex-studio.de>
+-Rainer Böhme <rfxswf@reflex\-studio.de>
 +Rainer B\[:o]hme <rfxswf@reflex-studio.de>
  .TP
  Matthias Kramm
---- swftools-0.9.1+201202040819+ds1.orig/src/pdf2swf.1
-+++ swftools-0.9.1+201202040819+ds1/src/pdf2swf.1
+--- swftools.orig/src/pdf2swf.1
++++ swftools/src/pdf2swf.1
 @@ -1,9 +1,9 @@
  .TH pdf2swf "1" "June 2008" "pdf2swf" "swftools"
  .SH NAME
@@ -86,8 +86,8 @@
  .TP
  \fB\-S\fR, \fB\-\-shapes\fR 
      Don't use SWF Fonts, but store everything as shape.
---- swftools-0.9.1+201202040819+ds1.orig/src/swfbbox.1
-+++ swftools-0.9.1+201202040819+ds1/src/swfbbox.1
+--- swftools.orig/src/swfbbox.1
++++ swftools/src/swfbbox.1
 @@ -35,7 +35,7 @@
      Clip bounding boxes to movie size
  .TP
@@ -97,8 +97,8 @@
  .TP
  \fB\-v\fR, \fB\-\-verbose\fR 
      Be more verbose
---- swftools-0.9.1+201202040819+ds1.orig/src/swfcombine.1
-+++ swftools-0.9.1+201202040819+ds1/src/swfcombine.1
+--- swftools.orig/src/swfcombine.1
++++ swftools/src/swfcombine.1
 @@ -29,7 +29,7 @@
  .TP
  \fB\-t\fR, \fB\-\-stack\fR 
@@ -139,17 +139,8 @@
  packed into Movieclips, therefore the outputfile will have exactly as many
  frames as there were inputfiles. Also, the files don't need to have names.
  If you want to access the Movieclips, their names are frameXX, where XX is
-@@ -120,7 +120,7 @@
- Create two flash movies. Insert some rectangle into one of them, and give
- it a name. (E.g. "foo") Now call
- 
--swfcombine -o combined.swf master.swf foo=slave.swf
-+swfcombine \-o combined.swf master.swf foo=slave.swf
- 
- As a result, the slave movie should be visible inside the master movie
- at the position where the rectangle used to be.
---- swftools-0.9.1+201202040819+ds1.orig/src/swfdump.1
-+++ swftools-0.9.1+201202040819+ds1/src/swfdump.1
+--- swftools.orig/src/swfdump.1
++++ swftools/src/swfdump.1
 @@ -18,7 +18,7 @@
      Print short help message and exit
  .TP
@@ -180,8 +171,8 @@
  .TP
  \fB\-d\fR, \fB\-\-hex\fR 
      Print hex output of tag data, too.
---- swftools-0.9.1+201202040819+ds1.orig/src/swfextract.1
-+++ swftools-0.9.1+201202040819+ds1/src/swfextract.1
+--- swftools.orig/src/swfextract.1
++++ swftools/src/swfextract.1
 @@ -5,7 +5,7 @@
  .B swfextract
  [\fIoptions\fR] [\fIfile.swf\fR]
@@ -209,8 +200,8 @@
  at the same position in the generated movie as in the
  original movie.
  .TP
---- swftools-0.9.1+201202040819+ds1.orig/src/swfstrings.1
-+++ swftools-0.9.1+201202040819+ds1/src/swfstrings.1
+--- swftools.orig/src/swfstrings.1
++++ swftools/src/swfstrings.1
 @@ -30,6 +30,6 @@
      Print version information and exit
  .SH AUTHORS
@@ -219,8 +210,8 @@
 +Rainer B\[:o]hme <rfxswf@reflex-studio.de>
  .TP
  Matthias Kramm <kramm@quiss.org>
---- swftools-0.9.1+201202040819+ds1.orig/src/wav2swf.1
-+++ swftools-0.9.1+201202040819+ds1/src/wav2swf.1
+--- swftools.orig/src/wav2swf.1
++++ swftools/src/wav2swf.1
 @@ -47,7 +47,7 @@
      Set mp3 bitrate to \fIbps\fR (default: 32)
  .TP
@@ -230,48 +221,25 @@
  .SH AUTHOR
  
  Matthias Kramm <kramm@quiss.org>
---- swftools-0.9.1+201202040819+ds1.orig/src/gif2swf.1
-+++ swftools-0.9.1+201202040819+ds1/src/gif2swf.1
+--- swftools.orig/src/gif2swf.1
++++ swftools/src/gif2swf.1
 @@ -9,7 +9,7 @@
  .SH DESCRIPTION
  This tools converts gif image files into an SWF animation. It takes any
- number of input pictures, and converts them to SWF one-by-one, where every
+ number of input pictures, and converts them to SWF one\-by\-one, where every
 -converted picture is a seperate frame in the target SWF. 
 +converted picture is a separate frame in the target SWF. 
  
  .SH OPTIONS
  .TP
---- swftools-0.9.1+201202040819+ds1.orig/src/png2swf.1
-+++ swftools-0.9.1+201202040819+ds1/src/png2swf.1
+--- swftools.orig/src/png2swf.1
++++ swftools/src/png2swf.1
 @@ -9,7 +9,7 @@
  .SH DESCRIPTION
  This tools converts png image files into an SWF animation. It takes any
- number of input pictures, and converts them to SWF one-by-one, where every
+ number of input pictures, and converts them to SWF one\-by\-one, where every
 -converted picture is a seperate frame in the target SWF. 
 +converted picture is a separate frame in the target SWF. 
  .PP
  The way the
- images are encoded in SWF is very similar to PNG (in that a zlib-based, lossless
---- swftools-0.9.1+201202040819+ds1.orig/src/as3compile.1
-+++ swftools-0.9.1+201202040819+ds1/src/as3compile.1
-@@ -1,9 +1,9 @@
- .TH as3compile "1" "April 2009" "as3compile" "swftools"
- .SH NAME
--as3compile - Compile .as ActionScript 3.0 files to swf.
-+as3compile \- Compile .as ActionScript 3.0 files to swf.
- 
- .SH Synopsis
--.B as3compile file.as [-o file.swf] 
-+.B as3compile file.as [\-o file.swf] 
- 
- .SH DESCRIPTION
- Compiles a file written in ActionScript 3.0 to a SWF file.
-@@ -63,7 +63,7 @@
- .SH EXAMPLE
- 
-  The following is a basic as3 file that can be compiled e.g.
-- with \fBas3compile -X 400 -Y 400 smiley.as\fR
-+ with \fBas3compile \-X 400 \-Y 400 smiley.as\fR
- 
-  // smiley.as
-  package
+ images are encoded in SWF is very similar to PNG (in that a zlib\-based, lossless
