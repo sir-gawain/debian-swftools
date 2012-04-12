@@ -1,4 +1,4 @@
-Description: Do not generate avi2swf/Makefile.
+Description: Do not generate avi2swf.
 Author: Christian Welzel <gawain@camlann.de>
 Last-Update: 2012-03-25
 
@@ -25,3 +25,14 @@ Last-Update: 2012-03-25
  
  pdf2swf_makefile="lib/pdf/Makefile"
  PDF2SWF='pdf2swf$(E)'
+--- swftools.orig/Makefile.in
++++ swftools/Makefile.in
+@@ -16,8 +16,6 @@
+ 	cd lib/python;$(MAKE) $@
+ 	@echo making $@ in lib/ruby...
+ 	cd src;$(MAKE) $@
+-	@echo making $@ in avi2swf...
+-	cd avi2swf;$(MAKE) $@
+ 	@echo making $@ in swfs...
+ 	cd swfs;$(MAKE) $@
+ 	@$(MAKE) $@-local

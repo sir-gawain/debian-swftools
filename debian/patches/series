@@ -1,8 +1,7 @@
-manpages.patch
-src_makefile.patch
-makefile.patch
 add-missing-m4.patch
-spelling.patch
 add-swfrender-manpage.patch
 remove-pdf2swf.patch
-disable-avi2swf-in-configurein.patch
+remove-avi2swf.patch
+manpages.patch
+makefile.patch
+spelling.patch
