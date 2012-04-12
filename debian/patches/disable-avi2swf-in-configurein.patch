@@ -1,0 +1,27 @@
+Description: Do not generate avi2swf/Makefile.
+Author: Christian Welzel <gawain@camlann.de>
+Last-Update: 2012-03-25
+
+--- swftools.orig/configure.in
++++ swftools/configure.in
+@@ -476,13 +476,13 @@
+   echo "* The following headers/libraries are missing: " ${MISSINGLIBS}
+ fi
+ 
+-avi2swf="avi2swf/Makefile"
+-if test "x${AVIFILE}" '!=' "xtrue" -a "x${AVIFIL32}" '!=' "xtrue"; then
+- #don't whine, avi2swf is outdated anyway
+- #echo "* Disabling avi2swf tool..."
+- echo all install uninstall clean: > avi2swf/Makefile
+- avi2swf=
+-fi
++#avi2swf="avi2swf/Makefile"
++#if test "x${AVIFILE}" '!=' "xtrue" -a "x${AVIFIL32}" '!=' "xtrue"; then
++# #don't whine, avi2swf is outdated anyway
++# #echo "* Disabling avi2swf tool..."
++# echo all install uninstall clean: > avi2swf/Makefile
++# avi2swf=
++#fi
+ 
+ pdf2swf_makefile="lib/pdf/Makefile"
+ PDF2SWF='pdf2swf$(E)'

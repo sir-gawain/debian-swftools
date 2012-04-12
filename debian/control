@@ -1,10 +1,9 @@
 Source: swftools
 Section: utils
 Priority: extra
-Maintainer: Simo Kauppi <swk@nic.fi>
-X-Python-Version: >= 2.5
-Build-Depends: autoconf, automake, debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg8-dev, libt1-dev (>= 5.1.0), libgif-dev (>= 4.1.4), libpoppler-dev, zlib1g-dev (>= 1:1.2.3), libart-2.0-dev (>= 2.3.17), python-all-dev (>= 2.6.6-3~), python-imaging (>= 1.1.5)
-Standards-Version: 3.9.2
+Maintainer: Christian Welzel <gawain@camlann.de>
+Build-Depends: debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev, libfreetype6-dev, libjpeg8-dev, libt1-dev, libgif-dev, zlib1g-dev
+Standards-Version: 3.9.3
 Homepage: http://www.swftools.org/
 
 Package: swftools
@@ -23,10 +22,6 @@ Description: Collection of utilities for SWF file manipulation/creation
   * font2swf converts font files (TTF, Type1) into SWF.
   * gif2swf converts GIFs into SWF. It is also able to handle animated gifs.
   * jpeg2swf takes one or more JPEG pictures and generates an SWF slideshow.
-  * pdf2swf is a PDF to SWF Converter. It generates one frame per page and
-    enables you to have fully formatted text, including tables, formulas etc.
-    inside your Flash Movie. It's based on the xpdf PDF parser from
-    Derek B. Noonburg
   * png2swf takes one or more PNG pictures and generates an SWF slideshow.
   * swfcombine is a tool for inserting SWFs into Wrapper SWFs. (Templates)
     E.g. for including the pdf2swf SWFs into some sort of Browsing-SWF.
@@ -39,32 +34,4 @@ Description: Collection of utilities for SWF file manipulation/creation
   * swfc is a tool for creating SWF files from simple script files.
   * wav2swf converts WAV files into SWF.
  .
- This package does not include avi2swf.
-
-Package: python-rfxswf
-Section: python
-Architecture: any
-Provides: ${python:Provides}
-Replaces: python2.4-rfxswf (<< 0.8.1-2)
-Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}, python-imaging (>= 1.1.5-11)
-Description: Python wrapper for the rfxswf library
- RFXSWF library is a fully featured library which can be used for standalone
- SWF generation. It includes support for Bitmaps, Buttons, Shapes, Text, Fonts,
- Sound etc. It also has support for ActionScript using the Ming ActionCompiler.
- .
- This is the wrapper for using the rfxswf library from the Python scripting
- language. The rfxswf library is in the librfxswf-dev package.
-
-Package: librfxswf-dev
-Section: libdevel
-Architecture: any
-Depends: ${misc:Depends}, libfontconfig1-dev (>= 2.4.2), libfreetype6-dev (>= 2.2.1), libjpeg62-dev (>= 6b-13), libgif-dev (>= 4.1.4), libt1-dev (>= 5.1.0), zlib1g-dev (>= 1:1.2.3)
-Description: RFXSWF library for SWF (Flash) generation
- RFXSWF library is a fully featured library which can be used for standalone
- SWF generation. It includes support for Bitmaps, Buttons, Shapes, Text, Fonts,
- Sound etc. It also has support for ActionScript using the Ming ActionCompiler.
- .
- This package includes the static library and the header files.
- .
- There is also a wrapper for using the rfxswf library from the Python scripting
- language. The wrapper is in the python2.x-rfxswf package.
+ This package does not include pdf2swf and avi2swf.

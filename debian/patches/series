@@ -1,7 +1,8 @@
 01_manpages.patch
 02_src_makefile.patch
 04_makefile.patch
-05_libpoppler.patch
 06-add-missing-m4.patch
 07_spelling.patch
 08-add-swfrender-manpage.patch
+09-remove-pdf2swf.patch
+disable-avi2swf-in-configurein.patch
