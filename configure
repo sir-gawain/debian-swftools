@@ -2636,7 +2636,7 @@ fi
 
 
 PACKAGE=swftools
-VERSION=2012-02-04-0819
+VERSION=0.9.2
 
 # ------------------------------------------------------------------
 
@@ -3866,7 +3866,7 @@ cat > conftest.c << EOF
 #include <stdlib.h>
 #include <stdio.h>
 
-int main (int argc, char*argv)
+int main ()
 {
     int a,b;
     b=3;
