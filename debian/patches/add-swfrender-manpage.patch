@@ -3,7 +3,7 @@ Author: Christian Welzel <gawain@camlann.de>
 Last-Update: 2012-02-15
 
 --- /dev/null
-+++ swftools-0.9.1+201202040819+ds1/src/swfrender.1
++++ swftools/src/swfrender.1
 @@ -0,0 +1,29 @@
 +.TH swfrender "1" "April 2009" "swfrender" "swftools"
 +.SH NAME

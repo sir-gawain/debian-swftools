@@ -27,8 +27,8 @@ Last-Update: 2012-03-25
  PDF2SWF='pdf2swf$(E)'
 --- swftools.orig/Makefile.in
 +++ swftools/Makefile.in
-@@ -16,8 +16,6 @@
- 	cd lib/python;$(MAKE) $@
+@@ -14,8 +14,6 @@
+ #	cd lib/python;$(MAKE) $@
  	@echo making $@ in lib/ruby...
  	cd src;$(MAKE) $@
 -	@echo making $@ in avi2swf...

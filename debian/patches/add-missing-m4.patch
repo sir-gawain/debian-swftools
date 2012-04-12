@@ -5,7 +5,7 @@ Author: Christian Welzel <gawain@camlann.de>
 Last-Update: 2012-02-05
 
 --- /dev/null
-+++ swftools_0.9.1+20111215+ds1/m4/fftw.m4
++++ swftools/m4/fftw.m4
 @@ -0,0 +1,52 @@
 +AC_DEFUN([RFX_CHECK_FFTW],
 +[
@@ -60,7 +60,7 @@ Last-Update: 2012-02-05
 +])
 +
 --- /dev/null
-+++ swftools_0.9.1+20111215+ds1/m4/lowercase.m4
++++ swftools/m4/lowercase.m4
 @@ -0,0 +1,17 @@
 +AC_DEFUN([RFX_CHECK_LOWERCASE_UPPERCASE],
 +[
@@ -80,7 +80,7 @@ Last-Update: 2012-02-05
 +])
 +
 --- /dev/null
-+++ swftools_0.9.1+20111215+ds1/m4/opengl.m4
++++ swftools/m4/opengl.m4
 @@ -0,0 +1,55 @@
 +AC_DEFUN([RFX_CHECK_OPENGL],
 +[
@@ -138,7 +138,7 @@ Last-Update: 2012-02-05
 +])
 +
 --- /dev/null
-+++ swftools_0.9.1+20111215+ds1/m4/ruby.m4
++++ swftools/m4/ruby.m4
 @@ -0,0 +1,94 @@
 +AC_DEFUN([RFX_CHECK_RUBY],
 +[
