@@ -1,108 +1,44 @@
-This package was debianized by Simo Kauppi <swk@nic.fi> on
-Mon, 31 Jan 2007 17:44:23 +0200.
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: swftools
+Upstream-Contact: http://www.swftools.org/
+Source: http://www.swftools.org/download.html
 
-It was downloaded from http://www.swftools.org/
+Files: debian/*
+Copyright: 2007-2008, Simo Kauppi <swk@nic.fi>
+           2008, Barry deFreese <bdefreese@debian.org>
+           2009, Fabrice Coutadeur <fabricesp@ubuntu.com>
+           2010, Brian Thomason <brian.thomason@canonical.com>
+           2012, Christian Welzel <gawain@camlann.de>
+License: GPL-2+
 
-Copyright Holders:
+Files: *
+Copyright: 2000-2007, Matthias Kramm <kramm@quiss.org>
+           2000-2003, Rainer Böhme <rfxswf@reflex-studio.de>
+           2005, Daichi Shinozaki <dseg@shield.jp>
+           1996-2007, Glyph & Cog, LLC
+           1998-2001, Raph Levien
+           1984, 1989, 1990, 2000, 2001, 2002 Free Software Foundation, Inc.
+           2002, Opaque Industries - http://www.opaque.net
+           1995, 1996, 1997, and 1998 WIDE Project.
+           2003, Poul-Henning Kamp
+           2004, Mederra Oy <http://www.mederra.fi>
+           2005, Joel Yliluoma <bisqwit@iki.fi>
+           1997, URW Software
+           1999, (URW)++ Design & Development
+License: GPL-2+
 
- Copyright (C) 2000-2007 Matthias Kramm <kramm@quiss.org>
- Copyright (C) 2000-2003 Rainer Böhme <rfxswf@reflex-studio.de>
- Copyright (C) 2005 Daichi Shinozaki <dseg@shield.jp>
- Copyright (C) 1996-2007 Glyph & Cog, LLC
- Copyright (C) 1998-2001 Raph Levien
- Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002 Free Software Foundation, Inc.
- Copyright (C) 2002 Opaque Industries - http://www.opaque.net/
- Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
- Copyright (C) 2003 Poul-Henning Kamp
- Copyright (C) 2004 Mederra Oy <http://www.mederra.fi>
- Copyright (C) 2005 Joel Yliluoma <bisqwit@iki.fi>
- Copyright (C) 1997 URW Software
- Copyright (C) 1999 (URW)++ Design & Development
-
-The authors of the swftools can be contacted via the swftools mailing list in
-http://mail.nongnu.org/mailman/listinfo/swftools-common
-
-Most of this package is licensed under the GNU General Public License except
-for the following:
-
- libart library is licensed under the GNU Library General Public License.
-
- The pdf2swf/fonts/* are licensed under the GNU General Public License with the
- following exception:
-
-   "As a special exception, permission is granted to include this font
-   program in a Postscript or PDF file that consists of a document that
-   contains text to be displayed or printed using this font, regardless
-   of the conditions or license applying to the document itself."
-
- lib/MD5.c is licensed under the following terms:
-
-  All rights reserved.
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-  1. Redistributions of source code must retain the above copyright
-     notice, this list of conditions and the following disclaimer.
-  2. Redistributions in binary form must reproduce the above copyright
-     notice, this list of conditions and the following disclaimer in the
-     documentation and/or other materials provided with the distribution.
-  3. Neither the name of the project nor the names of its contributors
-     may be used to endorse or promote products derived from this software
-     without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED.  IN NO EVENT SHALL THE PROJECT OR CONTRIBUTORS BE LIABLE
-  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-  SUCH DAMAGE.
-
-
-Licenses:
-
-GNU General Public License
-
-   This package is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-
-   This package is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this package; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-On Debian systems, the complete text of the GNU General
-Public License can be found in `/usr/share/common-licenses/GPL'.
-
-GNU Library General Public License
-
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public
-   License along with this library; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-On Debian systems, the complete text of the GNU Library General
-Public License can be found in `/usr/share/common-licenses/LGPL-2'.
-
-The Debian packaging is copyright 2007, Simo Kauppi, and is licensed under
-the GPL, see above.
+License: GPL-2+
+ This program is free software; you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 2 of the License, or (at your option) any later
+ version.
+ .
+ This program is distributed in the hope that it will be useful, but WITHOUT
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License along with
+ this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+X-Comment: On Debian GNU/Linux systems, the complete text of the GNU General
+ Public License can be found in the /usr/share/common-licenses/GPL-2 file.
