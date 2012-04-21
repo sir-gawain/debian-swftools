@@ -2,13 +2,23 @@ Source: swftools
 Section: utils
 Priority: extra
 Maintainer: Christian Welzel <gawain@camlann.de>
-Build-Depends: debhelper (>= 7.0.50~), flex, autotools-dev, libfontconfig1-dev, libfreetype6-dev, libjpeg8-dev, libt1-dev, libgif-dev, zlib1g-dev
+Build-Depends:
+ autotools-dev,
+ debhelper (>= 7.0.50~),
+ flex,
+ libfontconfig1-dev,
+ libfreetype6-dev,
+ libgif-dev,
+ libjpeg8-dev,
+ libmp3lame-dev,
+ libt1-dev,
+ zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://www.swftools.org/
 
 Package: swftools
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, gsfonts
+Depends: gsfonts, ${misc:Depends}, ${shlibs:Depends}
 Suggests: gs-common
 Description: Collection of utilities for SWF file manipulation/creation
  SWF Tools is a collection of SWF (Flash) manipulation and creation utilities.
