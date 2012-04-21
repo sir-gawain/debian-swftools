@@ -3,6 +3,7 @@ Section: utils
 Priority: extra
 Maintainer: Christian Welzel <gawain@camlann.de>
 Build-Depends:
+ automake,
  autotools-dev,
  debhelper (>= 7.0.50~),
  flex,
