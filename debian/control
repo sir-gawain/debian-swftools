@@ -16,6 +16,8 @@ Build-Depends:
  zlib1g-dev
 Standards-Version: 3.9.3
 Homepage: http://www.swftools.org/
+Vcs-Git: git://github.com/sir-gawain/debian-swftools.git
+Vcs-Browser: https://github.com/sir-gawain/debian-swftools
 
 Package: swftools
 Architecture: any
