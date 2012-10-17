@@ -81,6 +81,9 @@ override_dh_auto_install:
 	sed -i s/"\(#include \"\.\)\.\(\/config\.h\"\)"/"\1\2"/ debian/tmp/usr/include/rfxswf/rfxswf.h
 #	cp -r lib/python/usr debian/tmp/
 
+override_dh_strip:
+	dh_strip --dbg-package=swftools-dbg
+
 get-orig-source:
 	uscan --no-conf --force-download --rename --download-current-version --destdir=.
 	mkdir -p _unpack
