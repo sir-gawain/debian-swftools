@@ -6,3 +6,4 @@ manpages.patch
 makefile.patch
 spelling.patch
 remove-fontconfig.patch
+fix-segfault-690237.patch
