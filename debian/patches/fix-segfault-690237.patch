@@ -1,0 +1,24 @@
+Description: Fixes segfault on i386 (Closes 690237)
+Author: Matthias Kramm <kramm@quiss.org>
+Last-Update: 2012-10-18
+
+diff --git a/lib/as3/registry.c b/lib/as3/registry.c
+index 5aaef97..1bec405 100644
+--- a/lib/as3/registry.c
++++ b/lib/as3/registry.c
+@@ -538,13 +538,13 @@ classinfo_t* registry_getMovieClip() {
+ 
+ // ----------------------- builtin dummy types -------------------------
+ classinfo_t nullclass = {
+-    INFOTYPE_CLASS,0,0,ACCESS_PACKAGE, "", "null", 0, 0, 0
++    INFOTYPE_CLASS,0,0,ACCESS_PACKAGE, "", "null", 0,0,0,0,0,0,0,0,0,0,0,0,0,
+ };
+ classinfo_t* registry_getnullclass() {
+     return &nullclass;
+ }
+ classinfo_t voidclass = {
+-    INFOTYPE_CLASS,0,0,ACCESS_PACKAGE, "", "void", 0, 0, 0
++    INFOTYPE_CLASS,0,0,ACCESS_PACKAGE, "", "void", 0,0,0,0,0,0,0,0,0,0,0,0,0,
+ };
+ classinfo_t* registry_getvoidclass() {
+     return &voidclass;
