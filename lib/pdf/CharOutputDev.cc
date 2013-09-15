@@ -361,7 +361,7 @@ char* fontconfig_searchForFont(char*name)
     char*family = strdup(name);
     int len = strlen(family);
 
-    const char*styles[] = {"Medium", "Regular", "Bold", "Italic", "Black", "Narrow"};
+    const char*styles[] = {"BoldItalic", "Medium", "Regular", "Bold", "Italic", "Black", "Narrow"};
     const char*style = 0;
     int t;
     for(t=0;t<sizeof(styles)/sizeof(styles[0]);t++) {
@@ -388,7 +388,6 @@ char* fontconfig_searchForFont(char*name)
 	msg("<debug> FontConfig: Looking for font %s (family=%s)", name, family);
 	pattern = FcPatternBuild(NULL, FC_OUTLINE, FcTypeBool, FcTrue, FC_SCALABLE, FcTypeBool, FcTrue, FC_FAMILY, FcTypeString, family, NULL);
     }
-    pattern = FcPatternBuild(NULL, FC_OUTLINE, FcTypeBool, FcTrue, FC_SCALABLE, FcTypeBool, FcTrue, FC_FAMILY, FcTypeString, family, NULL);
 
     FcResult result;
     FcConfigSubstitute(0, pattern, FcMatchPattern); 
@@ -675,7 +674,13 @@ GBool CharOutputDev::needNonText()
 void CharOutputDev::endPage() 
 {
     msg("<verbose> endPage (GfxOutputDev)");
-    
+
+    if(this->previous_link) {
+        if(device->setparameter) {
+            device->setparameter(device, "link", "");
+        }
+    }
+
     if(this->links) {
 	kdtree_destroy(this->links);
 	this->links = 0;
@@ -688,6 +693,7 @@ void CharOutputDev::endPage()
 	l = last;
     }
     this->last_link = 0;
+    this->previous_link = 0;
 }
 
 static inline double sqr(double x) {return x*x;}
@@ -796,7 +802,9 @@ void CharOutputDev::drawChar(GfxState *state, double x, double y,
     }
 
     // check for invisible text -- this is used by Acrobat Capture
-    if (render == RENDER_INVISIBLE) {
+    if (render == RENDER_INVISIBLE ||
+        render == RENDER_FILL && state->getFillColorSpace()->isNonMarking() ||
+        render == RENDER_STROKE && state->getStrokeColorSpace()->isNonMarking()) {
 	col.a = 0;
 	if(!config_extrafontdata)
 	    return;
@@ -1200,7 +1208,7 @@ void CharOutputDev::processLink(Link *link, Catalog *catalog)
     printf("adding link %p at %f %f %f %f to tree\n", this->last_link, x1, y1, x2, y2);
 #endif
 
-    msg("<verbose> storing \"%s\" link to \"%s\"", type, FIXNULL(action));
+    msg("<verbose> storing \"%s\" link to \"%s\" (%f %f %f %f)", type, FIXNULL(action), x1, y1, x2, y2);
     free(s);s=0;
 }
 

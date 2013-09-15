@@ -94,7 +94,6 @@ U8 swf_GetU8(TAG * t)
   #ifdef DEBUG_RFXSWF
     if ((int)t->pos>=(int)t->len) 
     { fprintf(stderr,"GetU8() out of bounds: TagID = %i\n",t->id);
-      *(int*)0=0;
       return 0;
     }
   #endif
@@ -493,6 +492,26 @@ float floatToF16(float f)
     t.writeBit = 0;
     swf_SetF16(&t, f);
     return u;
+}
+
+float swf_GetFloat(TAG *tag)
+{
+    union {
+        U32 uint_bits;
+        float float_bits;
+    } f;
+    f.uint_bits = swf_GetU32(tag);
+    return f.float_bits;
+}
+
+void swf_SetFloat(TAG *tag, float v)
+{
+    union {
+        U32 uint_bits;
+        float float_bits;
+    } f;
+    f.float_bits = v;
+    swf_SetU32(tag, f.uint_bits);
 }
 
 double swf_GetD64(TAG*tag)
@@ -1033,7 +1052,6 @@ void  swf_SetPassword(TAG * t, const char * password)
     char* md5string;
 
 #if defined(HAVE_LRAND48) && defined(HAVE_SRAND48) && defined(HAVE_TIME_H) && defined(HAVE_TIME)
-    srand48(time(0));
     salt[0] = "abcdefghijklmnopqrstuvwxyz0123456789"[lrand48()%36];
     salt[1] = "abcdefghijklmnopqrstuvwxyz0123456789"[lrand48()%36];
 #else

@@ -98,6 +98,7 @@ BitmapOutputDev::BitmapOutputDev(InfoOutputDev*info, PDFDoc*doc, int*page2page, 
     this->gfxdev->setDevice(this->gfxoutput);
     
     this->config_extrafontdata = 0;
+    this->config_transparent = 0;
     this->config_optimizeplaincolorfills = 0;
     this->config_skewedtobitmap = 0;
     this->config_alphatobitmap = 0;
@@ -173,6 +174,8 @@ void BitmapOutputDev::setParameter(const char*key, const char*value)
        this->config_skewedtobitmap = atoi(value);
     } else if(!strcmp(key, "alphatobitmap")) {
        this->config_alphatobitmap = atoi(value);
+    } else if(!strcmp(key, "transparent")) {
+       this->config_transparent = atoi(value);
     }
 
     this->gfxdev->setParameter(key, value);
@@ -659,6 +662,7 @@ GBool BitmapOutputDev::checkNewText(int x1, int y1, int x2, int y2)
 	       text is now *above* the bitmap
 	     */
 	    msg("<verbose> Text is above current bitmap/polygon data (which is above some other text)");
+
 	    flushText();
 	    layerstate=STATE_TEXT_IS_ABOVE;
 	   
@@ -675,6 +679,7 @@ GBool BitmapOutputDev::checkNewText(int x1, int y1, int x2, int y2)
 	    update_bitmap(staletextbitmap, booltextbitmap, x1, y1, x2, y2, 0);
 	}
     }  else {
+        msg("<verbose> no intersection");
 	update_bitmap(staletextbitmap, booltextbitmap, x1, y1, x2, y2, 0);
     }
     
@@ -713,6 +718,7 @@ GBool BitmapOutputDev::checkNewBitmap(int x1, int y1, int x2, int y2)
 	    update_bitmap(stalepolybitmap, boolpolybitmap, x1, y1, x2, y2, 0);
 	}
     }  else {
+        msg("<verbose> no intersection");
 	update_bitmap(stalepolybitmap, boolpolybitmap, x1, y1, x2, y2, 0);
     }
     
@@ -1017,14 +1023,23 @@ void BitmapOutputDev::beginPage(GfxState *state, int pageNum)
     booltextbitmap = booltextdev->getBitmap();
     staletextbitmap = new SplashBitmap(booltextbitmap->getWidth(), booltextbitmap->getHeight(), 1, booltextbitmap->getMode(), 0);
     assert(staletextbitmap->getRowSize() == booltextbitmap->getRowSize());
-    
+
     msg("<debug> startPage %dx%d (%dx%d)", this->width, this->height, booltextbitmap->getWidth(), booltextbitmap->getHeight());
 
     clip0bitmap = clip0dev->getBitmap();
     clip1bitmap = clip1dev->getBitmap();
     rgbbitmap = rgbdev->getBitmap();
-    
-    flushText(); // write out the initial clipping rectangle
+
+    flushText();
+
+    /* draw white background */
+    gfxline_t*clippath = gfxline_makerectangle(0, 0, width, height);
+    this->dev->startclip(this->dev, clippath);
+    if(!config_transparent) {
+        gfxcolor_t white = {255,255,255,255};
+        this->dev->fill(this->dev, clippath, &white);
+    }
+    gfxline_free(clippath);
 
     /* just in case any device did draw a white background rectangle 
        into the device */
@@ -1584,7 +1599,6 @@ void BitmapOutputDev::beginStringOp(GfxState *state)
     clip1dev->beginStringOp(state);
     booltextdev->beginStringOp(state);
     gfxdev->beginStringOp(state);
-    this->gfxdev->setDevice(this->gfxoutput_string);
 }
 void BitmapOutputDev::beginString(GfxState *state, GString *s)
 {
@@ -1597,6 +1611,7 @@ void BitmapOutputDev::beginString(GfxState *state, GString *s)
     text_y1 = INT_MAX;
     text_x2 = INT_MIN;
     text_y2 = INT_MIN;
+    this->gfxdev->setDevice(this->gfxoutput_string);
 }
 
 void BitmapOutputDev::clearClips(int x1, int y1, int x2, int y2)
@@ -1743,7 +1758,6 @@ void BitmapOutputDev::drawChar(GfxState *state, double x, double y,
 	   different on a device without clipping), then draw it on the bitmap, not as
 	   text */
 	if(char_is_outside || render_as_bitmap || clip0and1differ(x1,y1,x2,y2)) {
-
             if(char_is_outside) msg("<verbose> Char %d is outside the page (%d,%d,%d,%d)", code, x1, y1, x2, y2);
             else if(render_as_bitmap)  msg("<verbose> Char %d needs to be rendered as bitmap", code);
             else msg("<verbose> Char %d is affected by clipping", code);
