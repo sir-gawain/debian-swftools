@@ -93,3 +93,32 @@ get-orig-source:
 	rm -rf _unpack/$(ORIGDIR)/avi2swf
 	tar -czf $(DEBTAR) -C _unpack $(ORIGDIR)
 	rm -rf _unpack
+
+get-git-orig-source: git-checkout
+	$(eval GIT_VERSION := $(shell cd git-tmp && git rev-parse --short HEAD))
+	$(eval GIT_DATE := $(shell cd git-tmp && git show -s --format="%ci" $(GIT_VERSION) | cut -d " " -f 1 | sed -e 's/-//g'))
+	sed -e 's/VERSION=0\.9\.2/VERSION=0\.9\.2\+git$(GIT_DATE)/g' git-tmp/configure.in > git-tmp/configure.in.2
+	mv git-tmp/configure.in.2 git-tmp/configure.in
+	grep -v xpdf git-tmp/release.in > git-tmp/release.in.2
+	sed -e 's/\/lib\/pdf\/aconf\.h \\/\/lib\/pdf\/aconf\.h"/g' git-tmp/release.in.2 > git-tmp/release.in
+	cd git-tmp && aclocal -I m4
+	cd git-tmp && autoconf
+	cd git-tmp && configure
+	cd git-tmp && chmod u+x release
+	cd git-tmp && release
+	mv git-tmp/swftools-0.9.2+git$(GIT_DATE).tar.gz .
+	rm -rf git-tmp
+	mkdir -p _unpack
+	tar -xzf swftools-0.9.2+git$(GIT_DATE).tar.gz -C _unpack
+	find _unpack  -maxdepth 1 -name "swftools*" -type d -exec mv \{} _unpack/swftools_0.9.2+git$(GIT_DATE).orig \;
+	rm -rf _unpack/swftools_0.9.2+git$(GIT_DATE).orig/lib/pdf/xpdf
+	rm -rf _unpack/swftools_0.9.2+git$(GIT_DATE).orig/avi2swf
+	tar -czf swftools_0.9.2+git$(GIT_DATE).orig.tar.gz -C _unpack swftools_0.9.2+git$(GIT_DATE).orig
+	rm -rf _unpack
+	@echo "Git-Version: " $(GIT_VERSION)
+
+git-checkout:
+	mkdir -p git-tmp
+	git clone git://git.swftools.org/swftools git-tmp
+
+.PHONY: git-checkout
