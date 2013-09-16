@@ -10,12 +10,12 @@ Last-Update: 2012-02-18
  top_srcdir = @top_srcdir@
  include ../Makefile.common
  
--all: librfxswf$(A) libgfxpdf$(A) libbase$(A) libgfx$(A) libgfxswf$(A) libocr$(A)
-+all: librfxswf$(A) libbase$(A) libgfx$(A) libgfxswf$(A) libocr$(A)
+-all: librfxswf$(A) libgfxpdf$(A) libbase$(A) libgfx$(A) libgfxswf$(A)
++all: librfxswf$(A) libbase$(A) libgfx$(A) libgfxswf$(A)
  
  lame_objects = lame/psymodel.$(O) lame/fft.$(O) lame/newmdct.$(O) lame/quantize.$(O) lame/takehiro.$(O) lame/reservoir.$(O) lame/quantize_pvt.$(O) lame/vbrquantize.$(O) lame/encoder.$(O) lame/id3tag.$(O) lame/version.$(O) lame/tables.$(O) lame/util.$(O) lame/bitstream.$(O) lame/set_get.$(O) lame/VbrTag.$(O) lame/lame.$(O)
  lame_in_source = @lame_in_source@
-@@ -188,8 +188,8 @@
+@@ -180,8 +180,8 @@
  	$(AR) r librfxswf$(A) $(rfxswf_objects) rfxswf.$(O) drawer.$(O) $(lame_in_source) $(h263_objects) $(as12compiler_in_source) $(as3compiler_objects)
  	$(RANLIB) librfxswf$(A)
  
@@ -26,7 +26,7 @@ Last-Update: 2012-02-18
  
  tests: png.test.c
  	$(L) png.test.c -o png.test $(LIBS)
-@@ -203,5 +203,4 @@
+@@ -195,5 +195,4 @@
  	cd lame && $(MAKE) clean && cd .. || true
  	cd action && $(MAKE) clean && cd ..
  	cd python && $(MAKE) clean && cd ..
@@ -52,9 +52,9 @@ Last-Update: 2012-02-18
  pdf2pdf.$(O): pdf2pdf.c
  	$(C) pdf2pdf.c -o $@
  gfx2gfx.$(O): gfx2gfx.c
-@@ -120,9 +118,6 @@
+@@ -119,9 +117,6 @@
+ 
  PDF2SWF_OBJ=../lib/libgfxswf$(A) ../lib/librfxswf$(A) ../lib/libgfxpdf$(A) ../lib/libgfx$(A) ../lib/libbase$(A)
- OCR_OBJ=../lib/libocr$(A)
  
 -pdf2swf$(E): pdf2swf.$(O) $(PDF2SWF_OBJ)
 -	$(LL) pdf2swf.$(O) -o $@ $(PDF2SWF_OBJ) $(LIBS) $(CXXLIBS)
@@ -62,7 +62,7 @@ Last-Update: 2012-02-18
  pdf2pdf$(E): pdf2pdf.$(O) $(PDF2SWF_OBJ)
  	$(LL) pdf2pdf.$(O) -o $@ $(PDF2SWF_OBJ) $(LIBS) $(CXXLIBS)
  	$(STRIP) $@
-@@ -143,9 +138,9 @@
+@@ -142,9 +137,9 @@
  
  clean: 
  	rm -f *.o *.obj *.lo *.la *~ gmon.out
@@ -94,13 +94,12 @@ Last-Update: 2012-02-18
  	@echo making $@ in avi2swf...
 --- swftools.orig/lib/python/Makefile.in
 +++ swftools/lib/python/Makefile.in
-@@ -37,7 +37,8 @@
+@@ -37,7 +37,7 @@
  	$(AR) cru SWF$(A) $(SWF_OBJS) $(SWF_DEPS)
  	$(RANLIB) SWF$(A)
  
--GFX_DEPS=../libgfxpdf$(A) ../libgfxswf$(A)  ../librfxswf$(A) ../libgfx$(A) ../libocr$(A) ../libbase$(A) 
-+#GFX_DEPS=../libgfxpdf$(A) ../libgfxswf$(A)  ../librfxswf$(A) ../libgfx$(A) ../libocr$(A) ../libbase$(A) 
-+GFX_DEPS=../libgfxswf$(A)  ../librfxswf$(A) ../libgfx$(A) ../libocr$(A) ../libbase$(A) 
+-GFX_DEPS=../libgfxpdf$(A) ../libgfxswf$(A)  ../librfxswf$(A) ../libgfx$(A) ../libbase$(A) 
++GFX_DEPS=../libgfxswf$(A)  ../librfxswf$(A) ../libgfx$(A) ../libbase$(A) 
  gfx.$(SLEXT): gfx.$(O) $(GFX_DEPS) Makefile
  	$(L) -g $(SHARED) gfx.$(O) -o gfx.$(SLEXT) $(GFX_DEPS) $(PYTHON_LIB) $(LIBS) $(CXXLIBS)
  gfx$(A): gfx.$(O) $(GFX_DEPS) Makefile
