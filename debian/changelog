@@ -1,6 +1,12 @@
 swftools (0.9.2+git20130725-1) unstable; urgency=low
 
-  * New version from upstream git: commit b6e946b.
+  * New version from upstream git: commit b6e946b
+    (Closes: 715912, 715961, 716159, 716366).
+  * Changed build depends from libjpeg8-dev to libjpeg-dev (Closes: 694700).
+  * Bump Standards Version to 3.9.4.
+  * Added Vcs-* header to control.
+  * Added hardening build flags.
+  * Added debug package.
 
  -- Christian Welzel <gawain@camlann.de>  Sun, 15 Sep 2013 20:42:54 +0200
 
