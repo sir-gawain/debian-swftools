@@ -10,7 +10,7 @@ Build-Depends:
  libfontconfig1-dev,
  libfreetype6-dev,
  libgif-dev,
- libjpeg8-dev,
+ libjpeg-dev,
  libmp3lame-dev,
  libt1-dev,
  zlib1g-dev
