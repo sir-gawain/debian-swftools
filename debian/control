@@ -13,7 +13,7 @@ Build-Depends:
  libjpeg-dev,
  libmp3lame-dev,
  zlib1g-dev
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: http://www.swftools.org/
 Vcs-Git: git://github.com/sir-gawain/debian-swftools.git
 Vcs-Browser: https://github.com/sir-gawain/debian-swftools
