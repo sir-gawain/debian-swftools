@@ -12,6 +12,7 @@ Build-Depends:
  libgif-dev,
  libjpeg-dev,
  libmp3lame-dev,
+ libzzip-dev,
  zlib1g-dev
 Standards-Version: 3.9.5
 Homepage: http://www.swftools.org/
