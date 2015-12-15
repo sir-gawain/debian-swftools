@@ -6,4 +6,4 @@ manpages.patch
 makefile.patch
 spelling.patch
 remove-fontconfig.patch
-giflib5.diff
+giflib5.patch
