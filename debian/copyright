@@ -3,14 +3,6 @@ Upstream-Name: swftools
 Upstream-Contact: http://www.swftools.org/
 Source: http://www.swftools.org/download.html
 
-Files: debian/*
-Copyright: 2007-2008, Simo Kauppi <swk@nic.fi>
-           2008, Barry deFreese <bdefreese@debian.org>
-           2009, Fabrice Coutadeur <fabricesp@ubuntu.com>
-           2010, Brian Thomason <brian.thomason@canonical.com>
-           2012, Christian Welzel <gawain@camlann.de>
-License: GPL-2+
-
 Files: *
 Copyright: 2000-2007, Matthias Kramm <kramm@quiss.org>
            2000-2003, Rainer Böhme <rfxswf@reflex-studio.de>
@@ -25,6 +17,14 @@ Copyright: 2000-2007, Matthias Kramm <kramm@quiss.org>
            2005, Joel Yliluoma <bisqwit@iki.fi>
            1997, URW Software
            1999, (URW)++ Design & Development
+License: GPL-2+
+
+Files: debian/*
+Copyright: 2007-2008, Simo Kauppi <swk@nic.fi>
+           2008, Barry deFreese <bdefreese@debian.org>
+           2009, Fabrice Coutadeur <fabricesp@ubuntu.com>
+           2010, Brian Thomason <brian.thomason@canonical.com>
+           2012, Christian Welzel <gawain@camlann.de>
 License: GPL-2+
 
 License: GPL-2+
